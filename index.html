@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="video_section">
+      <video autoplay muted loop playsinline class="video-bg">
+        <source src="./assets/restraunt_video2.mp4" type="video/mp4" />
+      </video>
+      <div class="video-overlay"></div>
+
+      <img class="logo" src="./assets/logo.png" alt="" />
+
+      <div class="hero-container">
+        <h1 class="hero-text">If You’re Hungry, Scroll Down</h1>
+        <div class="scroll-down">
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar">
+      <div class="navbar_logo">
+        <img src="./assets/logo_nav.png" alt="" />
+      </div>
+      <div class="newUser">
+        <div class="login">Log in</div>
+        <div class="signUp">Sign up</div>
+      </div>
+    </nav>
+    <main class="mainBody">
+      <div class="quotes">
+        <p class="quote highlight">Feel Hungry</p>
+        <p class="quote">Find Food Fast</p>
+        <p class="quote">Discover the Best Food & Drinks in Mumbai</p>
+      </div>
+
+      <div class="searchBar">
+        <input type="search" />
+        <button>Search</button>
+      </div>
+      <div class="delivery_dining">
+        <div class="twoOption" id="delivery">
+          <img src="./assets/delivery.png" alt="delivery icon" />
+          <p>Delivery</p>
+        </div>
+        <div class="twoOption" id="taste_trip">
+          <img src="./assets/taste_trip.png" alt="dining out icon" />
+          <p>Taste trip</p>
+        </div>
+      </div>
+      <!-- for restaurants -->
+      <!-- <section class="taste_trip_filter">
+        <h2 id="filterRestaurants"></h2>
+        <div class="filters"></div>
+      </section> -->
+
+      <!-- for delivery -->
+      <!-- <section class="deliveryFilter">
+        <div class="filters"></div>
+      </section> -->
+
+      <!-- <div class="showFood"> -->
+      <!-- restaurant part -->
+      <!-- <div class="deliverySection"></div> -->
+      <!-- </div> -->
+      <!-- <button id="scrollToTopBtn" title="Go to top">↑</button> -->
+    </main>
+    <!-- <footer class="appFooter">
+      <div class="footerContent">
+        🍔 Food Delivery Section
+        <div class="footerDelivery">
+          <h3>Food Delivery</h3>
+          <p>
+            Explore curated restaurants, mock menus, and dynamic filters—all
+            designed to simulate a real-world delivery experience.
+          </p>
+          <ul>
+            <li>Dynamic restaurant cards</li>
+            <li>Mock ratings & cuisine types</li>
+            <li>Interactive filter UI</li>
+          </ul>
+        </div>
+
+        🔗 Navigation Links
+        <div class="footerLinks">
+          <a href="#home">Home</a>
+          <a href="#restaurants">Restaurants</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        🧑‍💻 Developer Credit
+        <div class="footerCredit">
+          <p>Designed & developed by Ritesh Rana</p>
+          <p>© 2025 Zwigato UI Showcase</p>
+        </div>
+      </div>
+    </footer> -->
+    <script src="filterData.js"></script>
+    <script src="restaurantsAndDeliveryDumyData.js"></script>
+    <script src="app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        AOS.init({
+          duration: 600,
+          offset: 120,
+          once: true,
+        });
+      });
+    </script> -->
+  </body>
+</html>
