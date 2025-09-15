@@ -257,3 +257,7 @@ document.getElementById("scrollToTopBtn").addEventListener("click", () => {
     block: "start",
   });
 });
+
+filterBtn.addEventListener("click", (e) => {
+  console.log(e);
+});
