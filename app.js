@@ -68,12 +68,38 @@ function filterOption(val1, val2, val3) {
     const headingOption = document.createElement("option");
     headingOption.value = "";
     headingOption.textContent = getHeadingText(selectId);
-    headingOption.disabled = true;
+    headingOption.hidden = true;
+
     headingOption.selected = true;
     select.appendChild(headingOption);
 
     select.addEventListener("click", (e) => {
       const id = e.target.id;
+      const selectedValue = e.target.value;
+      // console.log(selectedValue);
+
+      filterBtn.addEventListener("click", () => {
+        const filters = {};
+
+        document.querySelectorAll(".filters select").forEach((select) => {
+          const id = select.id;
+          const value = select.value;
+          if (value) filters[id] = value;
+        });
+
+        const isTasteTripActive = showfood.contains(restaurantsSection);
+        const dataToFilter = isTasteTripActive ? restaurant : deliveryItems;
+
+        const filteredData = applyFilters(dataToFilter, filters);
+
+        if (isTasteTripActive) {
+          restaurantsSection.innerHTML = "";
+          showRestaurants(filteredData);
+        } else {
+          deliverySection.innerHTML = "";
+          showDelivery(filteredData);
+        }
+      });
       // console.log(id);
 
       if (optionsAddedMap[id]) return; // Already listed
@@ -118,9 +144,54 @@ function filterOption(val1, val2, val3) {
     });
   });
   filtersMainOptionDiv.appendChild(filterBtn);
+
+  // console.log(value);
+}
+function applyFilters(dataArray, filters) {
+  return dataArray.filter((item) => {
+    return Object.entries(filters).every(([key, value]) => {
+      if (!value) return true; // Skip empty filters
+
+      switch (key) {
+        case "cuisineFilterRest":
+        case "cuisineFilterDeli":
+          return item.food_type === value || item.cuisine === value;
+        case "locationFilter":
+          return item.location === value;
+        case "ratingFilter":
+          return (
+            parseFloat(item.rating) >= parseFloat(value.replace("⭐ ", ""))
+          );
+        case "priceFilterRest":
+          return matchPrice(item.price_for_two, value);
+        case "priceFilterDeli":
+          return matchPrice(item.price, value);
+        case "distanceFilter":
+          return parseInt(item.distance_from_customer_house) <= parseInt(value);
+        default:
+          return true;
+      }
+    });
+  });
 }
 
-filterBtn.addEventListener("click", (btnEvnt) => {});
+function matchPrice(price, range) {
+  if (range === "low") return price <= 1000;
+  if (range === "mid") return price > 1000 && price <= 2000;
+  if (range === "high") return price > 2000;
+  return true;
+}
+function filteringRestaurantandDelivery(receiveValue) {
+  console.log("Filtering by:", receiveValue);
+  console.log("Restaurant data:", restaurant);
+
+  const filterData = restaurant.filter((item) => {
+    return item.food_type.toLowerCase() === receiveValue.toLowerCase();
+  });
+
+  // console.log("Filtered results:", filterData);
+  showRestaurants(filterData);
+}
 
 function getHeadingText(id) {
   if (id === "cuisineFilterRest" || id === "cuisineFilterDeli") {
@@ -158,6 +229,7 @@ const showFood = document.querySelector(".showFood");
 function showRestaurants(restaurantArray) {
   showFood.style.display = "block";
   let delay = 0;
+  restaurantsSection.innerHTML = "";
 
   restaurantArray.forEach((restObj) => {
     restaurantsSection.innerHTML += `
@@ -173,7 +245,12 @@ function showRestaurants(restaurantArray) {
     </p>
               </div>
               <div class="restaurantsAllDetail">
-                <p class="food_type">${restObj.food_type}</p>
+                <p class="food_type">${restObj.food_type
+                  .slice(0, 2)
+                  .join(" , ")}
+  ${restObj.food_type.length > 2 ? "..." : ""}
+
+</p>
                 <p class="two_price">price-of-two: ${restObj.price_for_two}</p>
               </div>
               <div class="restaurantsAllDetail">
