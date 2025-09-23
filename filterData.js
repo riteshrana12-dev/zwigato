@@ -90,17 +90,17 @@ const mumbaiLocations = [
 ];
 const filterIdsOfRestaurants = [
   "cuisineFilterRest",
-  "locationFilter",
-  "alcoholFilter",
+  "locationFilterRest",
+  "alcoholFilterRest",
   "priceFilterRest",
-  "distanceFilter",
+  "distanceFilterRest",
 ];
 //for delivery
 const filterIdsOfDelivery = [
   "cuisineFilterDeli",
-  "categoryFilter",
-  "vegFilter",
-  "ratingFilter",
+  "categoryFilterDeli",
+  "vegFilterDeli",
+  "ratingFilterDeli",
   "priceFilterDeli",
 ];
 const foodNames = [
