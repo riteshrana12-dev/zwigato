@@ -322,7 +322,7 @@ function showFoodItems(dataArray, type) {
 
     delay += 100;
   });
-  allCardsRestaurantAndDelivery(dataArray);
+  allCardsRestaurantAndDelivery(dataArray, type);
 
   AOS.refresh();
 }
@@ -345,14 +345,14 @@ document.getElementById("scrollToTopBtn").addEventListener("click", () => {
   });
 });
 
-function allCardsRestaurantAndDelivery(dataArray) {
+function allCardsRestaurantAndDelivery(dataArray, type) {
   const allCards = document.querySelectorAll(
     ".restaurantsDetail, .deliveryDetail"
   );
 
-  detailShow(allCards, dataArray);
+  detailShow(allCards, dataArray, type);
 }
-function detailShow(allCards, dataArray) {
+function detailShow(allCards, dataArray, type) {
   allCards.forEach((card) => {
     card.addEventListener("click", () => {
       const detailPanel = document.getElementById("detailPanel");
@@ -361,17 +361,17 @@ function detailShow(allCards, dataArray) {
       const restaurantIndex = card.getAttribute("data-index");
       const itemData = dataArray[restaurantIndex]; // the full object (restaurant or delivery)
 
-      const imgSrc = card.querySelector("img")?.src;
-      const name = card.querySelector(".name")?.textContent || "Unnamed";
+      // const imgSrc = card.querySelector("img")?.src;
+      // const name = card.querySelector(".name")?.textContent || "Unnamed";
       const rating = card.querySelector(".ratings")?.textContent || "No rating";
-      const location = card.querySelector(".location")?.textContent || "";
-      const distance_from_customer_house =
-        card.querySelector(".distance")?.textContent || "";
+      // const location = card.querySelector(".location")?.textContent || "";
+      // const distance_from_customer_house =
+      // card.querySelector(".distance")?.textContent || "";
 
       // Build detail panel
       let foodTypesHTML = "";
       let alcoholHTML = "";
-
+      let cartControlHTML = "";
       if (itemData.food_type) {
         foodTypesHTML = `<p><strong>Food Types:</strong> ${itemData.food_type.join(
           ", "
@@ -381,25 +381,47 @@ function detailShow(allCards, dataArray) {
       if (itemData.alcohol !== undefined) {
         alcoholHTML = `<p><strong>Alcohol:</strong> ${itemData.alcohol}</p>`;
       }
-
-      detailPanel.innerHTML = `
-        <div class="detail-content">
-          <span id="closeDetail" class="close-btn">×</span>
-          <div><img id="detailImg" src="${imgSrc}" alt="Restaurant Image" /></div>
-          <div id="detailInfo">
-            <h2>${name}</h2>
-            <p>${rating}</p>
-            ${foodTypesHTML}
-            ${alcoholHTML}
-            <p>${location}</p>
-            <p><strong>Distance from you:</strong> ${distance_from_customer_house}</p> 
-          </div>
-          <div class="cartControls">
+      if (type === "delivery") {
+        cartControlHTML = `<div class="cartControls">
             <button id="minusBtn">–</button>
             <span id="cartCount">0</span>
             <button id="plusBtn">+</button>
             <button id="addCartBtn">Add to Cart</button>
+          </div>`;
+      } else {
+        const today = new Date();
+        const nextWeek = new Date();
+        nextWeek.setDate(today.getDate() + 7);
+
+        const minDate = today.toISOString().split("T")[0];
+        const maxDate = nextWeek.toISOString().split("T")[0];
+
+        bookTableHTML = `
+  <div class="booking-section">
+    <label for="bookingDate"><strong>Select Date:</strong></label>
+    <input type="date" id="bookingDate" min="${minDate}" max="${maxDate}" />
+    <button id="bookTableBtn" class="book-table-btn">📅 Book a Table</button>
+  </div>
+`;
+      }
+      detailPanel.innerHTML = `
+        <div class="detail-content">
+          <span id="closeDetail" class="close-btn">×</span>
+          <div><img id="detailImg" src="./assets/${itemData.image}.jpg" alt="Restaurant Image" /></div>
+          <div id="detailInfo">
+            <h2>${itemData.rest_name}</h2>
+            <p>${rating}</p>
+            <p><strong>Price for Two: </strong>₹${itemData.price_for_two}</p>
+            ${foodTypesHTML}
+            ${alcoholHTML}
+            <p>${itemData.location}</p>
+            <p><strong>Distance from you:</strong> ${itemData.distance_from_customer_house}</p> 
+            <p><strong>Open at: </strong> ${itemData.restaurant_open_time}</p>
+            <p><strong>Open at: </strong> ${itemData.restaurant_close_time}</p>
+
           </div>
+          ${bookTableHTML}
+          ${cartControlHTML}
         </div>
       `;
 
