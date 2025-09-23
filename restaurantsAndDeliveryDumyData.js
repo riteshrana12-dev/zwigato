@@ -1,9 +1,16 @@
 //restaurant data
 const restaurant = [
   {
-    image: "h12",
+    image: "h1",
     rest_name: "Flame & Grill",
-    food_type: ["Vietnamese", "Fusion", "Asian"],
+    food_type: [
+      "Vietnamese",
+      "Fusion",
+      "Asian",
+      "Chinese",
+      "Seafood",
+      "American",
+    ],
     price_for_two: 998,
     location: "Churchgate",
     distance_from_customer_house: "29.55 km",
@@ -12,9 +19,9 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h7",
+    image: "h2",
     rest_name: "Zen Garden",
-    food_type: ["Continental", "Mediterranean"],
+    food_type: ["Continental", "Mediterranean", "Seafood", "Chinese"],
     price_for_two: 1875,
     location: "Juhu",
     distance_from_customer_house: "2.97 km",
@@ -23,9 +30,9 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h7",
+    image: "h3",
     rest_name: "The Breakfast Club",
-    food_type: ["Vietnamese", "Fusion", "Continental"],
+    food_type: ["Vietnamese", "Fusion", "Continental", "Vegan"],
     price_for_two: 1320,
     location: "Dadar",
     distance_from_customer_house: "28.69 km",
@@ -36,7 +43,7 @@ const restaurant = [
   {
     image: "h4",
     rest_name: "The Spice Route",
-    food_type: ["BBQ", "Grill"],
+    food_type: ["BBQ", "Grill", "Mughlai", "North Indian"],
     price_for_two: 705,
     location: "Bandra",
     distance_from_customer_house: "7.57 km",
@@ -45,9 +52,9 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h6",
+    image: "h5",
     rest_name: "Grill House",
-    food_type: ["Continental", "BBQ", "Fusion"],
+    food_type: ["Continental", "BBQ", "Fusion", "Chinese"],
     price_for_two: 1968,
     location: "Andheri",
     distance_from_customer_house: "2.52 km",
@@ -56,9 +63,9 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h16",
+    image: "h6",
     rest_name: "The Breakfast Club",
-    food_type: ["Seafood", "Continental"],
+    food_type: ["Seafood", "Continental", "South Indian", "North Indian"],
     price_for_two: 1642,
     location: "Kurla",
     distance_from_customer_house: "8.44 km",
@@ -67,9 +74,9 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h1",
+    image: "h7",
     rest_name: "The Spice Route",
-    food_type: ["Thai", "Chinese"],
+    food_type: ["Thai", "Chinese", "Seafood", "Vegan", "Fusion", "Continental"],
     price_for_two: 1949,
     location: "Sion",
     distance_from_customer_house: "25.06 km",
@@ -78,9 +85,16 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h18",
+    image: "h8",
     rest_name: "Dosa District",
-    food_type: ["Mexican", "Fusion"],
+    food_type: [
+      "Mexican",
+      "Fusion",
+      "American",
+      "French",
+      "Mediterranean",
+      "Korean",
+    ],
     price_for_two: 711,
     location: "Versova",
     distance_from_customer_house: "14.16 km",
@@ -89,9 +103,9 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h16",
+    image: "h9",
     rest_name: "Grill House",
-    food_type: ["French", "European"],
+    food_type: ["French", "European", "Indian", "Chinese"],
     price_for_two: 2098,
     location: "Borivali",
     distance_from_customer_house: "16.83 km",
@@ -100,9 +114,9 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h1",
+    image: "h10",
     rest_name: "Grill House",
-    food_type: ["BBQ", "Grill"],
+    food_type: ["BBQ", "Grill", "Seafood"],
     price_for_two: 271,
     location: "Andheri",
     distance_from_customer_house: "2.91 km",
@@ -111,7 +125,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h6",
+    image: "h11",
     rest_name: "Grill House",
     food_type: ["Korean", "Asian"],
     price_for_two: 1602,
@@ -122,7 +136,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h13",
+    image: "h12",
     rest_name: "Urban Tandoor",
     food_type: ["Mexican", "Continental"],
     price_for_two: 875,
@@ -133,7 +147,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h17",
+    image: "h13",
     rest_name: "Grill House",
     food_type: ["Japanese", "Asian", "Grill"],
     price_for_two: 2337,
@@ -144,7 +158,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h1",
+    image: "h14",
     rest_name: "The Spice Route",
     food_type: ["BBQ", "Asian", "Fusion"],
     price_for_two: 1916,
@@ -155,7 +169,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h12",
+    image: "h15",
     rest_name: "Zen Garden",
     food_type: ["Mediterranean", "Fusion", "BBQ"],
     price_for_two: 1118,
@@ -166,7 +180,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h17",
+    image: "h16",
     rest_name: "Café de Paris",
     food_type: ["North Indian", "Indian"],
     price_for_two: 1235,
@@ -177,7 +191,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h5",
+    image: "h17",
     rest_name: "The Spice Route",
     food_type: ["Chinese", "Asian"],
     price_for_two: 1788,
@@ -188,7 +202,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h1",
+    image: "h18",
     rest_name: "Tandoori Nights",
     food_type: ["Thai", "Chinese", "Asian"],
     price_for_two: 1898,
@@ -199,7 +213,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h5",
+    image: "h19",
     rest_name: "Bombay Biryani Hub",
     food_type: ["Thai", "Indian", "Middle Eastern"],
     price_for_two: 1554,
@@ -210,7 +224,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h3",
+    image: "h20",
     rest_name: "Urban Tandoor",
     food_type: ["French", "Continental", "Fusion"],
     price_for_two: 1513,
@@ -221,7 +235,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h17",
+    image: "h1",
     rest_name: "The Spice Route",
     food_type: ["Vietnamese", "Asian", "Fusion"],
     price_for_two: 785,
@@ -232,7 +246,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h4",
+    image: "h2",
     rest_name: "The Royal Spoon",
     food_type: ["Chinese", "Asian"],
     price_for_two: 2007,
@@ -243,7 +257,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h7",
+    image: "h3",
     rest_name: "Zen Garden",
     food_type: ["Korean", "Asian"],
     price_for_two: 1987,
@@ -254,7 +268,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h14",
+    image: "h4",
     rest_name: "Dosa District",
     food_type: ["Vietnamese", "Asian", "Fusion"],
     price_for_two: 1579,
@@ -265,7 +279,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h10",
+    image: "h5",
     rest_name: "Masala Junction",
     food_type: ["Thai", "Chinese", "Asian"],
     price_for_two: 139,
@@ -276,7 +290,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h4",
+    image: "h6",
     rest_name: "The Spice Route",
     food_type: ["French", "Continental", "Fusion"],
     price_for_two: 1685,
@@ -287,7 +301,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h18",
+    image: "h7",
     rest_name: "The Continental",
     food_type: ["Italian", "Continental", "Fusion"],
     price_for_two: 2052,
@@ -298,7 +312,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h19",
+    image: "h8",
     rest_name: "Spice Symphony",
     food_type: ["Mediterranean", "Seafood", "Asian"],
     price_for_two: 358,
@@ -309,7 +323,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h5",
+    image: "h9",
     rest_name: "Sushi Zen",
     food_type: ["Korean", "Japanese", "Asian"],
     price_for_two: 1531,
@@ -320,7 +334,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h3",
+    image: "h10",
     rest_name: "Urban Tandoor",
     food_type: ["Vegan", "Continental", "Fusion"],
     price_for_two: 2328,
@@ -331,7 +345,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h6",
+    image: "h11",
     rest_name: "Zen Garden",
     food_type: ["Mediterranean", "Fusion", "BBQ"],
     price_for_two: 359,
@@ -342,7 +356,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h8",
+    image: "h12",
     rest_name: "Curry & Co.",
     food_type: ["Fusion", "Indian", "North Indian"],
     price_for_two: 1425,
@@ -353,7 +367,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h18",
+    image: "h13",
     rest_name: "Curry & Co.",
     food_type: ["North Indian", "Indian"],
     price_for_two: 1502,
@@ -364,7 +378,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h8",
+    image: "h14",
     rest_name: "The Spice Route",
     food_type: ["South Indian", "Indian"],
     price_for_two: 1700,
@@ -375,7 +389,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h4",
+    image: "h15",
     rest_name: "Masala Junction",
     food_type: ["Fusion", "Continental"],
     price_for_two: 1809,
@@ -397,7 +411,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h7",
+    image: "h17",
     rest_name: "Tandoori Nights",
     food_type: ["American", "Continental"],
     price_for_two: 819,
@@ -408,7 +422,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h8",
+    image: "h18",
     rest_name: "Dosa District",
     food_type: ["Japanese", "Asian"],
     price_for_two: 2370,
@@ -419,7 +433,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h5",
+    image: "h19",
     rest_name: "Dosa District",
     food_type: ["Korean", "Asian"],
     price_for_two: 1626,
@@ -430,7 +444,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h14",
+    image: "h20",
     rest_name: "The Green Bowl",
     food_type: ["Fusion", "Vegan"],
     price_for_two: 130,
@@ -441,7 +455,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h13",
+    image: "h1",
     rest_name: "Urban Tandoor",
     food_type: ["Chinese", "Asian"],
     price_for_two: 510,
@@ -452,7 +466,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h14",
+    image: "h2",
     rest_name: "Tandoori Nights",
     food_type: ["BBQ", "Tandoori", "Grill"],
     price_for_two: 2239,
@@ -463,7 +477,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h18",
+    image: "h3",
     rest_name: "Café de Paris",
     food_type: ["Fusion", "French"],
     price_for_two: 1464,
@@ -474,7 +488,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h20",
+    image: "h4",
     rest_name: "The Green Bowl",
     food_type: ["Continental", "Vegan"],
     price_for_two: 672,
@@ -485,7 +499,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h9",
+    image: "h5",
     rest_name: "The Green Bowl",
     food_type: ["Continental", "Vegan"],
     price_for_two: 490,
@@ -496,7 +510,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h1",
+    image: "h6",
     rest_name: "Dosa District",
     food_type: ["South Indian", "Indian"],
     price_for_two: 1109,
@@ -507,7 +521,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h10",
+    image: "h7",
     rest_name: "Urban Tandoor",
     food_type: ["Thai", "Asian"],
     price_for_two: 1118,
@@ -518,7 +532,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h18",
+    image: "h8",
     rest_name: "The Green Bowl",
     food_type: ["Japanese", "Asian"],
     price_for_two: 1458,
@@ -529,7 +543,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h1",
+    image: "h9",
     rest_name: "Café Nirvana",
     food_type: ["Italian", "Continental"],
     price_for_two: 2414,
@@ -540,7 +554,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h18",
+    image: "h10",
     rest_name: "Flame & Grill",
     food_type: ["Mediterranean", "BBQ", "Grill"],
     price_for_two: 2225,
@@ -551,7 +565,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h12",
+    image: "h11",
     rest_name: "Masala Junction",
     food_type: ["Continental", "Indian", "Fusion"],
     price_for_two: 1612,
@@ -562,7 +576,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h17",
+    image: "h12",
     rest_name: "Spice Symphony",
     food_type: ["Korean", "Asian"],
     price_for_two: 682,
@@ -573,7 +587,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h14",
+    image: "h13",
     rest_name: "The Royal Spoon",
     food_type: ["South Indian", "Indian"],
     price_for_two: 2014,
@@ -584,7 +598,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h1",
+    image: "h14",
     rest_name: "Grill House",
     food_type: ["Thai", "BBQ", "Asian"],
     price_for_two: 2012,
@@ -595,7 +609,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h6",
+    image: "h15",
     rest_name: "Tandoori Nights",
     food_type: ["Continental", "Indian", "BBQ"],
     price_for_two: 2465,
@@ -606,7 +620,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h20",
+    image: "h16",
     rest_name: "Zen Garden",
     food_type: ["BBQ", "Fusion"],
     price_for_two: 2286,
@@ -617,7 +631,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h18",
+    image: "h17",
     rest_name: "The Royal Spoon",
     food_type: ["North Indian", "Indian"],
     price_for_two: 2141,
@@ -628,7 +642,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h12",
+    image: "h18",
     rest_name: "Zen Garden",
     food_type: ["Mediterranean", "Fusion", "BBQ"],
     price_for_two: 303,
@@ -639,7 +653,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h6",
+    image: "h19",
     rest_name: "Spice Symphony",
     food_type: ["Mediterranean", "Asian"],
     price_for_two: 2338,
@@ -650,7 +664,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h17",
+    image: "h20",
     rest_name: "Masala Junction",
     food_type: ["Italian", "Continental"],
     price_for_two: 1622,
@@ -661,7 +675,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h6",
+    image: "h1",
     rest_name: "The Spice Route",
     food_type: ["Thai", "Chinese"],
     price_for_two: 1207,
@@ -672,7 +686,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h3",
+    image: "h2",
     rest_name: "Grill House",
     food_type: ["American", "BBQ", "Grill"],
     price_for_two: 332,
@@ -683,7 +697,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h6",
+    image: "h3",
     rest_name: "Grill House",
     food_type: ["American", "Grill"],
     price_for_two: 587,
@@ -694,7 +708,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h1",
+    image: "h4",
     rest_name: "Sushi Zen",
     food_type: ["Korean", "Japanese"],
     price_for_two: 433,
@@ -705,7 +719,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h6",
+    image: "h5",
     rest_name: "The Spice Route",
     food_type: ["BBQ", "Asian"],
     price_for_two: 1598,
@@ -716,7 +730,7 @@ const restaurant = [
     restaurant_close_time: "24:00 PM",
   },
   {
-    image: "h5",
+    image: "h6",
     rest_name: "The Continental",
     food_type: ["South Indian", "Indian", "Continental"],
     price_for_two: 1270,
@@ -727,7 +741,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h1",
+    image: "h7",
     rest_name: "Masala Junction",
     food_type: ["Thai", "Chinese"],
     price_for_two: 1243,
@@ -738,7 +752,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h12",
+    image: "h8",
     rest_name: "The Continental",
     food_type: ["Vegan", "Continental"],
     price_for_two: 286,
@@ -749,7 +763,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h15",
+    image: "h9",
     rest_name: "Zen Garden",
     food_type: ["South Indian", "Indian"],
     price_for_two: 107,
@@ -760,7 +774,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h15",
+    image: "h10",
     rest_name: "Urban Tandoor",
     food_type: ["Mughlai", "North Indian", "Indian"],
     price_for_two: 1534,
@@ -771,7 +785,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h13",
+    image: "h11",
     rest_name: "The Continental",
     food_type: ["Vietnamese", "Fusion"],
     price_for_two: 2324,
@@ -782,7 +796,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h11",
+    image: "h12",
     rest_name: "Café Nirvana",
     food_type: ["North Indian", "Indian"],
     price_for_two: 2201,
@@ -793,7 +807,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h5",
+    image: "h13",
     rest_name: "Masala Junction",
     food_type: ["American", "Continental", "Fusion"],
     price_for_two: 428,
@@ -804,7 +818,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h9",
+    image: "h14",
     rest_name: "Urban Tandoor",
     food_type: ["Lebanese", "Middle Eastern"],
     price_for_two: 1284,
@@ -815,7 +829,7 @@ const restaurant = [
     restaurant_close_time: "21:00 PM",
   },
   {
-    image: "h11",
+    image: "h15",
     rest_name: "Spice Symphony",
     food_type: ["Seafood"],
     price_for_two: 1415,
@@ -826,7 +840,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h6",
+    image: "h16",
     rest_name: "Masala Junction",
     food_type: ["Mexican", "Continental"],
     price_for_two: 940,
@@ -837,7 +851,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h16",
+    image: "h17",
     rest_name: "Grill House",
     food_type: ["Chinese", "Asian", "BBQ"],
     price_for_two: 1461,
@@ -848,7 +862,7 @@ const restaurant = [
     restaurant_close_time: "22:00 PM",
   },
   {
-    image: "h5",
+    image: "h18",
     rest_name: "Café Nirvana",
     food_type: ["BBQ", "Grill"],
     price_for_two: 1555,
@@ -859,7 +873,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h4",
+    image: "h19",
     rest_name: "The Spice Route",
     food_type: ["Continental", "Fusion"],
     price_for_two: 1833,
@@ -870,7 +884,7 @@ const restaurant = [
     restaurant_close_time: "23:00 PM",
   },
   {
-    image: "h17",
+    image: "h20",
     rest_name: "Masala Junction",
     food_type: ["Japanese", "Asian"],
     price_for_two: 430,
