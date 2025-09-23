@@ -18,7 +18,7 @@ const deliverySection = document.createElement("div");
 deliverySection.classList.add("restaurantsSection");
 // showfood.appendChild(deliverySection);
 const optionsAddedMap = {}; // Track which filters have been updated
-
+const filterSelections = {};
 tasteTrip.addEventListener("click", () => {
   filtersMainOptionDiv.innerHTML = "";
   filtertext.textContent = " ";
@@ -35,7 +35,7 @@ tasteTrip.addEventListener("click", () => {
   }
   showfood.appendChild(restaurantsSection);
 
-  showRestaurants(restaurant);
+  showFoodItems(restaurant, "restaurant");
 });
 //for delivery
 delivery.addEventListener("click", () => {
@@ -54,14 +54,14 @@ delivery.addEventListener("click", () => {
   }
   showfood.appendChild(deliverySection);
 
-  showDelivery(deliveryItems);
+  showFoodItems(deliveryItems, "delivery");
 });
 function filterOption(val1, val2, val3) {
   filtersMainOptionDiv.appendChild(resetFilterBtn);
   val1.forEach((selectId) => {
     const select = document.createElement("select");
     select.id = selectId;
-    // console.log(select.id);
+    console.log(select.id);
     filtersMainOptionDiv.appendChild(select);
 
     // Add heading option dynamically
@@ -73,142 +73,163 @@ function filterOption(val1, val2, val3) {
     headingOption.selected = true;
     select.appendChild(headingOption);
 
-    select.addEventListener("click", (e) => {
-      const id = e.target.id;
-      const selectedValue = e.target.value;
-      // console.log(selectedValue);
+    if (optionsAddedMap[selectId]) return;
 
-      filterBtn.addEventListener("click", () => {
-        const filters = {};
-
-        document.querySelectorAll(".filters select").forEach((select) => {
-          const id = select.id;
-          const value = select.value;
-          if (value) filters[id] = value;
-        });
-
-        const isTasteTripActive = showfood.contains(restaurantsSection);
-        const dataToFilter = isTasteTripActive ? restaurant : deliveryItems;
-
-        const filteredData = applyFilters(dataToFilter, filters);
-
-        if (isTasteTripActive) {
-          restaurantsSection.innerHTML = "";
-          showRestaurants(filteredData);
-        } else {
-          deliverySection.innerHTML = "";
-          showDelivery(filteredData);
-        }
-      });
-      // console.log(id);
-
-      if (optionsAddedMap[id]) return; // Already listed
-      console.log(optionsAddedMap);
-
-      if (id === "cuisineFilterRest" || id === "cuisineFilterDeli") {
-        populateOptions(select, val2);
-      } else if (id === "locationFilter" || id === "categoryFilter") {
-        populateOptions(select, val3);
-      } else if (id === "alcoholFilter") {
-        select.innerHTML += `
+    if (selectId === "cuisineFilterRest" || selectId === "cuisineFilterDeli") {
+      populateOptions(select, val2);
+    } else if (
+      selectId === "locationFilterRest" ||
+      selectId === "categoryFilterDeli"
+    ) {
+      populateOptions(select, val3);
+    } else if (selectId === "alcoholFilterRest") {
+      select.innerHTML += `
         <option value="Yes">Yes</option>
         <option value="No">No</option>`;
-      } else if (id === "priceFilterRest") {
-        select.innerHTML += `
+    } else if (selectId === "priceFilterRest") {
+      select.innerHTML += `
         <option value="low">Under ₹1000</option>
         <option value="mid">₹1000–₹2000</option>
         <option value="high">Above ₹2000</option>`;
-      } else if (id === "priceFilterDeli") {
-        select.innerHTML += `
+    } else if (selectId === "priceFilterDeli") {
+      select.innerHTML += `
         <option value="low">Under ₹200</option>
         <option value="mid">₹200–₹500</option>
         <option value="high">Above ₹500</option>`;
-      } else if (id === "distanceFilter") {
-        select.innerHTML += `
+    } else if (selectId === "distanceFilterRest") {
+      select.innerHTML += `
         <option value="5">Within 5 km</option>
         <option value="10">Within 10 km</option>
         <option value="20">Within 20 km</option>
         <option value="30">Within 30 km</option>`;
-      } else if (id === "vegFilter") {
-        select.innerHTML += `
+    } else if (selectId === "vegFilterDeli") {
+      select.innerHTML += `
         <option value="Yes">Vegetarian</option>
         <option value="No">Non-Vegetarian</option>`;
-      } else if (id === "ratingFilter") {
-        select.innerHTML += `<option>⭐ 3.8+</option>
+    } else if (selectId === "ratingFilterDeli") {
+      select.innerHTML += `<option>⭐ 3.8+</option>
             <option>⭐ 4.0+</option>
             <option>⭐ 4.5+</option>
             <option>⭐ 4.9+</option>`;
+    }
+
+    optionsAddedMap[selectId] = true;
+
+    //using select and appending in object to check which section is actice delivery or restaurant by using their id
+    select.addEventListener("change", (e) => {
+      const id = e.target.id;
+      const selectedValue = e.target.value;
+      // Clear irrelevant filters when toggling
+      if (showfood.contains(restaurantsSection)) {
+        // If restaurant section is active, remove delivery filters
+        Object.keys(filterSelections).forEach((key) => {
+          if (key.includes("Deli")) {
+            delete filterSelections[key];
+          }
+        });
       }
 
-      optionsAddedMap[id] = true; // Mark as option listed
+      if (showfood.contains(deliverySection)) {
+        // If delivery section is active, remove restaurant filters
+        Object.keys(filterSelections).forEach((key) => {
+          if (key.includes("Rest")) {
+            delete filterSelections[key];
+          }
+        });
+      }
+
+      // Add/update current selection
+      filterSelections[id] = selectedValue;
     });
   });
   filtersMainOptionDiv.appendChild(filterBtn);
-
-  // console.log(value);
 }
-function applyFilters(dataArray, filters) {
-  return dataArray.filter((item) => {
-    return Object.entries(filters).every(([key, value]) => {
-      if (!value) return true; // Skip empty filters
 
-      switch (key) {
-        case "cuisineFilterRest":
-        case "cuisineFilterDeli":
-          return item.food_type === value || item.cuisine === value;
-        case "locationFilter":
-          return item.location === value;
-        case "ratingFilter":
-          return (
-            parseFloat(item.rating) >= parseFloat(value.replace("⭐ ", ""))
-          );
-        case "priceFilterRest":
-          return matchPrice(item.price_for_two, value);
-        case "priceFilterDeli":
-          return matchPrice(item.price, value);
-        case "distanceFilter":
-          return parseInt(item.distance_from_customer_house) <= parseInt(value);
-        default:
-          return true;
+//filterbtn logic
+filterBtn.addEventListener("click", () => {
+  const activeType = showfood.contains(restaurantsSection)
+    ? "restaurant"
+    : "delivery";
+  const sourceData = activeType === "restaurant" ? restaurant : deliveryItems;
+
+  const filteredData = sourceData.filter((item) => {
+    return Object.entries(filterSelections).every(([key, value]) => {
+      if (!value) return true;
+
+      if (key === "cuisineFilterRest") {
+        console.log(item.cuisine_type);
+        return item.food_type.includes(value);
+      }
+
+      if (key === "cuisineFilterDeli") {
+        return item.cuisine_type === value;
+      }
+
+      if (key === "locationFilterRest") return item.location === value;
+      if (key === "categoryFilterDeli") return item.category === value;
+      if (key === "alcoholFilterRest") return item.alcohol === value;
+
+      if (key === "priceFilterRest") {
+        if (value === "low") return item.price_for_two < 1000;
+        if (value === "mid")
+          return item.price_for_two >= 1000 && item.price_for_two <= 2000;
+        if (value === "high") return item.price_for_two > 2000;
+      }
+
+      if (key === "priceFilterDeli") {
+        if (value === "low") return item.price < 200;
+        if (value === "mid") return item.price >= 200 && item.price <= 500;
+        if (value === "high") return item.price > 500;
+      }
+      if (key === "distanceFilterRest") {
+        const itemDistance = parseFloat(item.distance_from_customer_house); // e.g., "3.29 km" → 3.29
+        const filterDistance = parseFloat(value); // e.g., "5"
+        return itemDistance <= filterDistance;
+      }
+
+      if (key === "vegFilterDeli") return item.is_veg === (value === "Yes");
+      if (key === "ratingFilterDeli") {
+        const ratingThreshold = parseFloat(
+          value.replace("⭐ ", "").replace("+", "")
+        );
+        return item.rating >= ratingThreshold;
       }
     });
   });
-}
+  showFoodItems(filteredData, activeType);
+});
 
-function matchPrice(price, range) {
-  if (range === "low") return price <= 1000;
-  if (range === "mid") return price > 1000 && price <= 2000;
-  if (range === "high") return price > 2000;
-  return true;
-}
-function filteringRestaurantandDelivery(receiveValue) {
-  console.log("Filtering by:", receiveValue);
-  console.log("Restaurant data:", restaurant);
-
-  const filterData = restaurant.filter((item) => {
-    return item.food_type.toLowerCase() === receiveValue.toLowerCase();
+//resetbtn the filterlogic
+resetFilterBtn.addEventListener("click", () => {
+  Object.keys(filterSelections).forEach((key) => {
+    filterSelections[key] = "";
+    // select is dynamically created
+    const select = document.getElementById(key);
+    if (select) select.value = "";
+    console.log(filterSelections);
   });
-
-  // console.log("Filtered results:", filterData);
-  showRestaurants(filterData);
-}
-
+  const activeType = showfood.contains(restaurantsSection)
+    ? "restaurant"
+    : "delivery";
+  const sourceData = activeType === "restaurant" ? restaurant : deliveryItems;
+  showFoodItems(sourceData, activeType);
+});
 function getHeadingText(id) {
   if (id === "cuisineFilterRest" || id === "cuisineFilterDeli") {
     return "Cuisine Type";
-  } else if (id === "locationFilter") {
+  } else if (id === "locationFilterRest") {
     return "Restaurant Location";
-  } else if (id === "alcoholFilter") {
+  } else if (id === "alcoholFilterRest") {
     return "Serves Alcohol";
   } else if (id === "priceFilterRest" || id === "priceFilterDeli") {
     return "Price Range";
-  } else if (id === "distanceFilter") {
+  } else if (id === "distanceFilterRest") {
     return "Distance";
-  } else if (id === "categoryFilter") {
+  } else if (id === "categoryFilterDeli") {
     return "Food Category";
-  } else if (id === "vegFilter") {
+  } else if (id === "vegFilterDeli") {
     return "Veg / Non-Veg";
-  } else if (id === "ratingFilter") {
+  } else if (id === "ratingFilterDeli") {
     return "Minimum Rating";
   } else {
     return "Select Option";
@@ -226,101 +247,90 @@ function populateOptions(selectElement, optionArray) {
 
 const showFood = document.querySelector(".showFood");
 
-function showRestaurants(restaurantArray) {
-  showFood.style.display = "block";
-  let delay = 0;
-  restaurantsSection.innerHTML = "";
-
-  restaurantArray.forEach((restObj) => {
-    restaurantsSection.innerHTML += `
-    <div class="restaurantsDetail " data-aos="fade-up">
-            <div class="restaurantsImg">
-              <img src="assets/${restObj.image}.jpg" alt="" />
-            </div>
-            <div class="restaurantsDescription">
-              <div class="restaurantsAllDetail">
-                <p class="name">${restObj.rest_name}</p>
-                <p class="ratings">${(Math.random() * 2 + 3).toFixed(1)}
-                 <span class="star-icon">★</span>
-    </p>
-              </div>
-              <div class="restaurantsAllDetail">
-                <p class="food_type">${restObj.food_type
-                  .slice(0, 2)
-                  .join(" , ")}
-  ${restObj.food_type.length > 2 ? "..." : ""}
-
-</p>
-                <p class="two_price">price-of-two: ${restObj.price_for_two}</p>
-              </div>
-              <div class="restaurantsAllDetail">
-                <p class="location">${restObj.location}</p>
-              </div>
-              <div class="restaurantsAllDetail">
-                <p class="time">Time:${restObj.restaurant_open_time}-${
-      restObj.restaurant_close_time
-    } </p>
-                <p class="distance">${restObj.distance_from_customer_house}</p>
-              </div>
-            </div>
-          </div>`;
-    // console.log(restObj.image);
-    delay += 100;
-  });
-  AOS.refresh();
-}
-
-function showDelivery(deliveryArray) {
+function showFoodItems(dataArray, type) {
   showFood.style.display = "block";
   let delay = 0;
 
-  deliveryArray.forEach((delObj) => {
-    deliverySection.innerHTML += `
-  <div class="deliveryDetail " data-aos="fade-up">
-    
-    <!-- Image Section -->
-    <div class="deliveryImg">
-      <img src="assets/${delObj.image}.png" alt="${delObj.name}" />
-    </div>
+  // Clear the appropriate section
+  if (type === "restaurant") {
+    restaurantsSection.innerHTML = "";
+  } else if (type === "delivery") {
+    deliverySection.innerHTML = "";
+  }
 
-    <!-- Description Section -->
-    <div class="deliveryDescription">
+  dataArray.forEach((item, index) => {
+    let html = "";
+
+    if (type === "restaurant") {
+      html = `
+      <div class="restaurantsDetail" data-aos="fade-up"  data-index="${index}">
       
-      <!-- Name -->
-      <div class="deliveryAllDetail">
-        <p class="name">${delObj.name}</p>
-      </div>
+        <div class="restaurantsImg">
+          <img src="assets/${item.image}.jpg" alt="" />
+        </div>
+        <div class="restaurantsDescription">
+          <div class="restaurantsAllDetail">
+            <p class="name">${item.rest_name}</p>
+            <p class="ratings">${(Math.random() * 2 + 3).toFixed(1)}
+              <span class="star-icon">★</span>
+            </p>
+          </div>
+          <div class="restaurantsAllDetail">
+            <p class="food_type" data-food='${JSON.stringify(
+              item.food_type
+            )}'>${item.food_type.slice(0, 2).join(" , ")}${
+        item.food_type.length > 2 ? "..." : ""
+      }</p>
+            <p class="two_price">price-of-two: ${item.price_for_two}</p>
+          </div>
+          <div class="restaurantsAllDetail">
+            <p class="location">${item.location}</p>
+          </div>
+          <div class="restaurantsAllDetail">
+            <p class="time">Time: ${item.restaurant_open_time}-${
+        item.restaurant_close_time
+      }</p>
+            <p class="distance">${item.distance_from_customer_house}</p>
+          </div>
+        </div>
+      </div>`;
+      restaurantsSection.innerHTML += html;
+    }
 
-      <!-- Price & Rating -->
-      <div class="deliveryAllDetail">
-        <p class="price">₹${delObj.price}</p>
-        <p class="ratings">⭐ ${delObj.rating}</p>
-      </div>
+    if (type === "delivery") {
+      html = `
+      <div class="deliveryDetail" data-aos="fade-up">
+        <div class="deliveryImg">
+          <img src="assets/${item.image}.png" alt="${item.name}" />
+        </div>
+        <div class="deliveryDescription">
+          <div class="deliveryAllDetail">
+            <p class="name">${item.name}</p>
+          </div>
+          <div class="deliveryAllDetail">
+            <p class="price">₹${item.price}</p>
+            <p class="ratings">⭐ ${item.rating}</p>
+          </div>
+          <div class="deliveryAllDetail">
+            <p class="time">⏱️ ${item.prep_time} min</p>
+          </div>
+          
+        </div>
+      </div>`;
+      deliverySection.innerHTML += html;
+    }
 
-      <!-- Prep Time -->
-      <div class="deliveryAllDetail">
-        <p class="time">⏱️ ${delObj.prep_time} min</p>
-      </div>
-
-      <!-- Quantity Controls -->
-      <div class="deliveryAllDetail quantityControl">
-        <button class="qtyBtn" onclick="decreaseQty(this)">−</button>
-        <span class="qtyDisplay">0</span>
-        <button class="qtyBtn" onclick="increaseQty(this)">+</button>
-      </div>
-
-    </div>
-  </div>
-`;
     delay += 100;
   });
+  allCardsRestaurantAndDelivery(dataArray);
+
   AOS.refresh();
 }
 
 const scrollBtn = document.getElementById("scrollToTopBtn");
 
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 1000) {
+  if (window.scrollY > window.innerHeight) {
     scrollBtn.classList.add("show");
   } else {
     scrollBtn.classList.remove("show");
@@ -330,11 +340,86 @@ window.addEventListener("scroll", () => {
 document.getElementById("scrollToTopBtn").addEventListener("click", () => {
   const target = document.querySelector(".mainBody");
   target.scrollIntoView({
+    top: 0,
     behavior: "smooth",
-    block: "start",
   });
 });
 
-filterBtn.addEventListener("click", (e) => {
-  console.log(e);
-});
+function allCardsRestaurantAndDelivery(dataArray) {
+  const allCards = document.querySelectorAll(
+    ".restaurantsDetail, .deliveryDetail"
+  );
+
+  detailShow(allCards, dataArray);
+}
+function detailShow(allCards, dataArray) {
+  allCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      const detailPanel = document.getElementById("detailPanel");
+      detailPanel.innerHTML = ""; // Clear previous content
+
+      const restaurantIndex = card.getAttribute("data-index");
+      const itemData = dataArray[restaurantIndex]; // the full object (restaurant or delivery)
+
+      const imgSrc = card.querySelector("img")?.src;
+      const name = card.querySelector(".name")?.textContent || "Unnamed";
+      const rating = card.querySelector(".ratings")?.textContent || "No rating";
+      const location = card.querySelector(".location")?.textContent || "";
+      const distance_from_customer_house =
+        card.querySelector(".distance")?.textContent || "";
+
+      // Build detail panel
+      let foodTypesHTML = "";
+      let alcoholHTML = "";
+
+      if (itemData.food_type) {
+        foodTypesHTML = `<p><strong>Food Types:</strong> ${itemData.food_type.join(
+          ", "
+        )}</p>`;
+      }
+
+      if (itemData.alcohol !== undefined) {
+        alcoholHTML = `<p><strong>Alcohol:</strong> ${itemData.alcohol}</p>`;
+      }
+
+      detailPanel.innerHTML = `
+        <div class="detail-content">
+          <span id="closeDetail" class="close-btn">×</span>
+          <div><img id="detailImg" src="${imgSrc}" alt="Restaurant Image" /></div>
+          <div id="detailInfo">
+            <h2>${name}</h2>
+            <p>${rating}</p>
+            ${foodTypesHTML}
+            ${alcoholHTML}
+            <p>${location}</p>
+            <p><strong>Distance from you:</strong> ${distance_from_customer_house}</p> 
+          </div>
+          <div class="cartControls">
+            <button id="minusBtn">–</button>
+            <span id="cartCount">0</span>
+            <button id="plusBtn">+</button>
+            <button id="addCartBtn">Add to Cart</button>
+          </div>
+        </div>
+      `;
+
+      detailPanel.style.display = "block";
+
+      // Reattach listeners
+      document.getElementById("closeDetail").addEventListener("click", () => {
+        detailPanel.style.display = "none";
+      });
+
+      document.getElementById("plusBtn").addEventListener("click", () => {
+        const countSpan = document.getElementById("cartCount");
+        countSpan.textContent = parseInt(countSpan.textContent) + 1;
+      });
+
+      document.getElementById("minusBtn").addEventListener("click", () => {
+        const countSpan = document.getElementById("cartCount");
+        const current = parseInt(countSpan.textContent);
+        if (current > 0) countSpan.textContent = current - 1;
+      });
+    });
+  });
+}
