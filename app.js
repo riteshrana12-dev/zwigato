@@ -330,18 +330,19 @@ function showFoodItems(dataArray, type) {
 const scrollBtn = document.getElementById("scrollToTopBtn");
 
 window.addEventListener("scroll", () => {
-  if (window.scrollY > window.innerHeight) {
+  const scrollThreshold = 150; // Show button after scrolling 150px
+
+  if (window.scrollY > scrollThreshold) {
     scrollBtn.classList.add("show");
   } else {
     scrollBtn.classList.remove("show");
   }
 });
 
-document.getElementById("scrollToTopBtn").addEventListener("click", () => {
-  const target = document.querySelector(".mainBody");
-  target.scrollIntoView({
-    top: 0,
+scrollBtn.addEventListener("click", () => {
+  document.querySelector(".mainBody").scrollIntoView({
     behavior: "smooth",
+    block: "start",
   });
 });
 
@@ -350,25 +351,18 @@ function allCardsRestaurantAndDelivery(dataArray, type) {
     ".restaurantsDetail, .deliveryDetail"
   );
 
-  detailShow(allCards, dataArray, type);
+  detailShow(allCards, dataArray, type, menuImages);
 }
-function detailShow(allCards, dataArray, type) {
+function detailShow(allCards, dataArray, type, menu) {
   allCards.forEach((card) => {
     card.addEventListener("click", () => {
       const detailPanel = document.getElementById("detailPanel");
       detailPanel.innerHTML = ""; // Clear previous content
 
       const restaurantIndex = card.getAttribute("data-index");
-      const itemData = dataArray[restaurantIndex]; // the full object (restaurant or delivery)
-
-      // const imgSrc = card.querySelector("img")?.src;
-      // const name = card.querySelector(".name")?.textContent || "Unnamed";
+      const itemData = dataArray[restaurantIndex];
       const rating = card.querySelector(".ratings")?.textContent || "No rating";
-      // const location = card.querySelector(".location")?.textContent || "";
-      // const distance_from_customer_house =
-      // card.querySelector(".distance")?.textContent || "";
 
-      // Build detail panel
       let foodTypesHTML = "";
       let alcoholHTML = "";
       let cartControlHTML = "";
@@ -405,27 +399,41 @@ function detailShow(allCards, dataArray, type) {
 `;
       }
       detailPanel.innerHTML = `
-        <div class="detail-content">
-          <span id="closeDetail" class="close-btn">×</span>
-          <div><img id="detailImg" src="./assets/${itemData.image}.jpg" alt="Restaurant Image" /></div>
-          <div id="detailInfo">
-            <h2>${itemData.rest_name}</h2>
-            <p>${rating}</p>
-            <p><strong>Price for Two: </strong>₹${itemData.price_for_two}</p>
-            ${foodTypesHTML}
-            ${alcoholHTML}
-            <p>${itemData.location}</p>
-            <p><strong>Distance from you:</strong> ${itemData.distance_from_customer_house}</p> 
-            <p><strong>Open at: </strong> ${itemData.restaurant_open_time}</p>
-            <p><strong>Open at: </strong> ${itemData.restaurant_close_time}</p>
+  <div class="detail-content split-layout">
+    <div class="left-section">
+      <span id="closeDetail" class="close-btn">×</span>
+      <div><img id="detailImg" src="./assets/${itemData.image}.jpg" alt="Restaurant Image" /></div>
+      <div id="detailInfo">
+        <h2>${itemData.rest_name}</h2>
+        <p>${rating}</p>
+        <p><strong>Price for Two: </strong>₹${itemData.price_for_two}</p>
+        ${foodTypesHTML}
+        ${alcoholHTML}
+        <p><strong>Location: </strong>${itemData.location}</p>
+        <p><strong>Distance from you:</strong> ${itemData.distance_from_customer_house}</p> 
+        <p><strong>Open at: </strong> ${itemData.restaurant_open_time}</p>
+        <p><strong>Close at: </strong> ${itemData.restaurant_close_time}</p>
+      </div>
+      ${bookTableHTML}
+      ${cartControlHTML}
+      
+    </div>
 
-          </div>
-          ${bookTableHTML}
-          ${cartControlHTML}
-        </div>
-      `;
+    <div class="right-section">
+    <div class="slider-frame">
+    <img id="sliderImage" src="./menuImg/${menu[0]}.png" alt="Menu Item" />
+    </div>
+    <div class="slider-controls">
+    <button id="prevBtn">← Prev</button>
+    <button id="nextBtn">Next →</button>
+    </div>
+  </div>
 
-      detailPanel.style.display = "block";
+
+  </div>
+`;
+
+      detailPanel.style.display = "flex";
 
       // Reattach listeners
       document.getElementById("closeDetail").addEventListener("click", () => {
