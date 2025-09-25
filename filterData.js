@@ -180,6 +180,7 @@ const cuisineTypes = [
 const categories = ["Main Course", "Drink", "Fast Food", "Cold Drink"];
 const isVeg = ["yes", "No"];
 const ratings = [3.8, 3.9, 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9];
+const menuImages = ["m1", "m2", "m3", "m4"];
 
 //creating dumpy data of restaurants
 
