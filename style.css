@@ -724,33 +724,231 @@ body {
   }
 }
 
-.detail-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  max-width: 500px;
+/* Reset and Base */
+/* html, body {
   height: 100%;
-  background: #fff;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  overflow-y: auto;
-  padding: 20px;
-  transition: transform 0.3s ease;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  overflow-x: hidden;
+} */
+
+/* Overlay Panel */
+#detailPanel {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 15, 15, 0.75);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  overflow: hidden;
+  touch-action: none;
+  animation: fadeIn 0.4s ease-in-out forwards;
 }
-.detail-content img {
+
+/* Detail Content Container */
+.detail-content {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+  animation: slideUp 0.5s ease-out;
+  transition: all 0.3s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Split Layout */
+.split-layout {
+  display: flex;
   width: 100%;
-  height: auto;
-  margin-bottom: 10px;
+  height: 100%;
 }
-.close-btn {
-  font-size: 24px;
-  cursor: pointer;
-  float: right;
+
+/* Left Section */
+.left-section {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1rem;
+  overflow: hidden; /* ✅ Prevent scroll */
+}
+
+/* Right Section */
+.right-section {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* ✅ Match left section height */
+}
+
+/* Restaurant Image */
+#detailImg {
+  width: 100%;
+  height: 310px;
+  object-fit: fill;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Info Text */
+#detailInfo h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+#detailInfo p {
+  margin: 0.4rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Booking and Cart */
+.booking-section,
+.cartControls {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 .cartControls {
-  display: flex;
-  gap: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  margin-top: 20px;
+  gap: 1rem;
+}
+.cartControls button,
+.book-table-btn {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+.book-table-btn {
+  background-color: #3498db;
+  color: white;
+}
+.cartControls button {
+  background-color: #2ecc71;
+  color: white;
+}
+#cartCount {
+  font-weight: bold;
+  background-color: #ecf0f1;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+
+/* Slider Frame */
+.slider-frame {
+  width: 100%;
+  height: 100%; /* ✅ Match right section height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Slider Image */
+#sliderImage {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 10px;
+}
+
+/* Slider Controls */
+.slider-controls {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+.slider-controls button {
+  background-color: #34495e;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.slider-controls button:hover {
+  background-color: #2c3e50;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: #e74c3c;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detail-content {
+    flex-direction: column;
+    height: auto;
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+
+  .split-layout {
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .left-section {
+    padding: 1rem;
+    height: auto;
+    overflow: auto;
+  }
+
+  .right-section {
+    padding: 0 1rem;
+    height: 500px;
+  }
+
+  .slider-frame {
+    height: 70%;
+  }
+
+  #sliderImage {
+    height: 100%;
+  }
+  #detailImg {
+    height: 250px;
+  }
 }
