@@ -23,7 +23,6 @@ tasteTrip.addEventListener("click", () => {
   filtersMainOptionDiv.innerHTML = "";
   filtertext.textContent = " ";
   filtertext.textContent = "Filter Restaurants";
-
   Object.keys(optionsAddedMap).forEach((key) => {
     optionsAddedMap[key] = false;
   });
@@ -36,6 +35,7 @@ tasteTrip.addEventListener("click", () => {
   showfood.appendChild(restaurantsSection);
 
   showFoodItems(restaurant, "restaurant");
+  showsearch(restaurantNames, "restaurant");
 });
 //for delivery
 delivery.addEventListener("click", () => {
@@ -55,13 +55,13 @@ delivery.addEventListener("click", () => {
   showfood.appendChild(deliverySection);
 
   showFoodItems(deliveryItems, "delivery");
+  showsearch(foodNames, "delivery");
 });
 function filterOption(val1, val2, val3) {
   filtersMainOptionDiv.appendChild(resetFilterBtn);
   val1.forEach((selectId) => {
     const select = document.createElement("select");
     select.id = selectId;
-    console.log(select.id);
     filtersMainOptionDiv.appendChild(select);
 
     // Add heading option dynamically
@@ -299,7 +299,7 @@ function showFoodItems(dataArray, type) {
 
     if (type === "delivery") {
       html = `
-      <div class="deliveryDetail" data-aos="fade-up">
+      <div class="deliveryDetail" data-aos="fade-up" data-index="${index}">
         <div class="deliveryImg">
           <img src="assets/${item.image}.png" alt="${item.name}" />
         </div>
@@ -359,30 +359,52 @@ function detailShow(allCards, dataArray, type, menu) {
       const detailPanel = document.getElementById("detailPanel");
       detailPanel.innerHTML = ""; // Clear previous content
 
-      const restaurantIndex = card.getAttribute("data-index");
-      const itemData = dataArray[restaurantIndex];
-      const rating = card.querySelector(".ratings")?.textContent || "No rating";
-
       let foodTypesHTML = "";
       let alcoholHTML = "";
-      let cartControlHTML = "";
-      if (itemData.food_type) {
-        foodTypesHTML = `<p><strong>Food Types:</strong> ${itemData.food_type.join(
-          ", "
-        )}</p>`;
-      }
 
-      if (itemData.alcohol !== undefined) {
-        alcoholHTML = `<p><strong>Alcohol:</strong> ${itemData.alcohol}</p>`;
-      }
       if (type === "delivery") {
-        cartControlHTML = `<div class="cartControls">
-            <button id="minusBtn">–</button>
-            <span id="cartCount">0</span>
-            <button id="plusBtn">+</button>
-            <button id="addCartBtn">Add to Cart</button>
-          </div>`;
+        const deliveryIndex = card.getAttribute("data-index");
+        const itemData = dataArray[deliveryIndex];
+
+        detailPanel.innerHTML = `
+          <div class="detail-deli vertical-layout">
+            <span id="closeDetail" class="close-btn">×</span>
+
+            <!-- Top: Food Image -->
+            <div class="food-image">
+              <img id="detailImgdeli" src="./assets/${
+                itemData.image
+              }.png" alt="${itemData.name}" />
+            </div>
+
+            <!-- Middle: Item Info -->
+            <div class="item-info-deli">
+              <h2>${itemData.name}</h2>
+              <p><strong>Category:</strong> ${itemData.category}</p>
+              <p><strong>Cuisine:</strong> ${itemData.cuisine_type}</p>
+              <p><strong>Price:</strong> ₹${itemData.price}</p>
+              <p><strong>Veg:</strong> ${itemData.is_veg ? "Yes" : "No"}</p>
+              <p><strong>Rating:</strong> ⭐ ${itemData.rating}</p>
+              <p><strong>Prep Time:</strong> ⏱️ ${itemData.prep_time} mins</p>
+            </div>
+
+            <!-- Bottom: Cart Controls -->
+            <div class="cartControls">
+              <button id="minusBtn">–</button>
+              <span id="cartCount">0</span>
+              <button id="plusBtn">+</button>
+              <button id="addCartBtn">Add to Cart</button>
+            </div>
+          </div>
+        `;
+
+        detailPanel.style.display = "flex";
       } else {
+        const restaurantIndex = card.getAttribute("data-index");
+        const itemData = dataArray[restaurantIndex];
+        const rating =
+          card.querySelector(".ratings")?.textContent || "No rating";
+
         const today = new Date();
         const nextWeek = new Date();
         nextWeek.setDate(today.getDate() + 7);
@@ -390,66 +412,162 @@ function detailShow(allCards, dataArray, type, menu) {
         const minDate = today.toISOString().split("T")[0];
         const maxDate = nextWeek.toISOString().split("T")[0];
 
-        bookTableHTML = `
-  <div class="booking-section">
-    <label for="bookingDate"><strong>Select Date:</strong></label>
-    <input type="date" id="bookingDate" min="${minDate}" max="${maxDate}" />
-    <button id="bookTableBtn" class="book-table-btn">📅 Book a Table</button>
-  </div>
-`;
+        if (itemData.food_type) {
+          foodTypesHTML = `<p><strong>Food Types:</strong> ${itemData.food_type.join(
+            ", "
+          )}</p>`;
+        }
+
+        if (itemData.alcohol !== undefined) {
+          alcoholHTML = `<p><strong>Alcohol:</strong> ${itemData.alcohol}</p>`;
+        }
+
+        detailPanel.innerHTML = `
+          <div class="detail-rest split-layout">
+            <div class="left-section">
+              <span id="closeDetail" class="close-btn">×</span>
+              <div>
+                <img id="detailImg" src="./assets/${itemData.image}.jpg" alt="Restaurant Image" />
+              </div>
+              <div id="detailInfo">
+                <h2>${itemData.rest_name}</h2>
+                <p>${rating}</p>
+                <p><strong>Price for Two: </strong>₹${itemData.price_for_two}</p>
+                ${foodTypesHTML}
+                ${alcoholHTML}
+                <p><strong>Location: </strong>${itemData.location}</p>
+                <p><strong>Distance from you:</strong> ${itemData.distance_from_customer_house}</p>
+                <p><strong>Open at: </strong> ${itemData.restaurant_open_time}</p>
+                <p><strong>Close at: </strong> ${itemData.restaurant_close_time}</p>
+              </div>
+              <div class="booking-section">
+                <label for="bookingDate"><strong>Select Date:</strong></label>
+                <input type="date" id="bookingDate" min="${minDate}" max="${maxDate}" />
+                <button id="bookTableBtn" class="book-table-btn">📅 Book a Table</button>
+              </div>
+            </div>
+
+            <div class="right-section">
+              <div class="slider-frame">
+                <img id="sliderImage" src="" alt="Menu Item" />
+              </div>
+              <div class="slider-controls">
+                <button id="prevBtn">← Prev</button>
+                <button id="nextBtn">Next →</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        detailPanel.style.display = "flex";
+
+        // ✅ Now attach slider logic AFTER HTML is injected
+        const sliderImage = document.getElementById("sliderImage");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        let currentSlideIndex = 0;
+
+        function updateSliderImage() {
+          if (menu.length > 0) {
+            sliderImage.src = `./menuImg/${menu[currentSlideIndex]}.png`;
+          }
+        }
+
+        function updateButtonStates() {
+          prevBtn.disabled = currentSlideIndex === 0;
+          nextBtn.disabled = currentSlideIndex === menu.length - 1;
+        }
+
+        if (prevBtn && nextBtn && sliderImage) {
+          prevBtn.addEventListener("click", () => {
+            if (currentSlideIndex > 0) {
+              currentSlideIndex--;
+              updateSliderImage();
+              updateButtonStates();
+            }
+          });
+
+          nextBtn.addEventListener("click", () => {
+            if (currentSlideIndex < menu.length - 1) {
+              currentSlideIndex++;
+              updateSliderImage();
+              updateButtonStates();
+            }
+          });
+
+          updateSliderImage();
+          updateButtonStates();
+        }
       }
-      detailPanel.innerHTML = `
-  <div class="detail-content split-layout">
-    <div class="left-section">
-      <span id="closeDetail" class="close-btn">×</span>
-      <div><img id="detailImg" src="./assets/${itemData.image}.jpg" alt="Restaurant Image" /></div>
-      <div id="detailInfo">
-        <h2>${itemData.rest_name}</h2>
-        <p>${rating}</p>
-        <p><strong>Price for Two: </strong>₹${itemData.price_for_two}</p>
-        ${foodTypesHTML}
-        ${alcoholHTML}
-        <p><strong>Location: </strong>${itemData.location}</p>
-        <p><strong>Distance from you:</strong> ${itemData.distance_from_customer_house}</p> 
-        <p><strong>Open at: </strong> ${itemData.restaurant_open_time}</p>
-        <p><strong>Close at: </strong> ${itemData.restaurant_close_time}</p>
-      </div>
-      ${bookTableHTML}
-      ${cartControlHTML}
-      
-    </div>
 
-    <div class="right-section">
-    <div class="slider-frame">
-    <img id="sliderImage" src="./menuImg/${menu[0]}.png" alt="Menu Item" />
-    </div>
-    <div class="slider-controls">
-    <button id="prevBtn">← Prev</button>
-    <button id="nextBtn">Next →</button>
-    </div>
-  </div>
+      // Close button
+      const closeBtn = document.getElementById("closeDetail");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          detailPanel.style.display = "none";
+        });
+      }
 
+      // Cart controls
+      const plusBtn = document.getElementById("plusBtn");
+      const minusBtn = document.getElementById("minusBtn");
+      const cartCount = document.getElementById("cartCount");
 
-  </div>
-`;
+      if (plusBtn && minusBtn && cartCount) {
+        plusBtn.addEventListener("click", () => {
+          cartCount.textContent = parseInt(cartCount.textContent) + 1;
+        });
 
-      detailPanel.style.display = "flex";
+        minusBtn.addEventListener("click", () => {
+          const current = parseInt(cartCount.textContent);
+          if (current > 0) cartCount.textContent = current - 1;
+        });
+      }
+    });
+  });
+}
 
-      // Reattach listeners
-      document.getElementById("closeDetail").addEventListener("click", () => {
-        detailPanel.style.display = "none";
-      });
+// search bar functinality
 
-      document.getElementById("plusBtn").addEventListener("click", () => {
-        const countSpan = document.getElementById("cartCount");
-        countSpan.textContent = parseInt(countSpan.textContent) + 1;
-      });
+function showsearch(dataArray, type) {
+  const searchBar = document.querySelector(".searchBar");
+  const input = document.querySelector("#searchInput");
+  const suggestionsBox = document.querySelector("#suggestions");
+  const searchBtn = document.querySelector("#searchBtn");
 
-      document.getElementById("minusBtn").addEventListener("click", () => {
-        const countSpan = document.getElementById("cartCount");
-        const current = parseInt(countSpan.textContent);
-        if (current > 0) countSpan.textContent = current - 1;
+  input.placeholder =
+    type === "delivery" ? "Search food" : "Search Restaurants";
+  searchBar.style.display = "flex";
+
+  input.addEventListener("input", (inputEvt) => {
+    suggestionsBox.innerHTML = "";
+
+    const query = inputEvt.target.value.toLowerCase().trim();
+    console.log(query);
+    if (query.length === 0) {
+      suggestionsBox.style.display = "none";
+      return;
+    }
+    const matches = dataArray.filter((item) =>
+      item.toLowerCase().startsWith(query)
+    );
+    if (matches.length === 0) {
+      suggestionsBox.style.display = "none";
+      return;
+    }
+
+    suggestionsBox.style.display = "block";
+    matches.forEach((match) => {
+      const div = document.createElement("div");
+      div.textContent = match;
+      div.classList.add("suggestion-item");
+      suggestionsBox.appendChild(div);
+      div.addEventListener("click", (e) => {
+        console.log(e);
       });
     });
   });
+
+  searchBtn.addEventListener("submit", () => {});
 }
