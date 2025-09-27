@@ -233,17 +233,23 @@ body {
   border-radius: 4px;
 }
 
-/* Search bar container */
 .searchBar {
   margin: 32px auto;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   max-width: 530px;
   gap: 13px;
+  position: relative; /* Needed for dropdown positioning */
 }
-.searchBar input[type="search"] {
+
+.searchWrapper {
+  position: relative;
   flex: 1;
+}
+
+.searchWrapper input[type="search"] {
+  width: 100%;
   padding: 13px 17px;
   font-size: 1rem;
   border: 2px solid #ddd;
@@ -252,10 +258,44 @@ body {
   transition: border 0.28s ease, box-shadow 0.28s;
   background: #f8fafd;
 }
-.searchBar input[type="search"]:focus {
+
+.searchWrapper input[type="search"]:focus {
   border-color: var(--primary);
   box-shadow: 0 2px 10px rgba(255, 77, 77, 0.09);
 }
+
+.searchWrapper .suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-top: none; /* Seamless connection to input */
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  max-height: 220px;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  z-index: 999;
+  display: none; /* Hidden by default */
+}
+.suggestions::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.searchWrapper .suggestion-item {
+  padding: 10px 17px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.searchWrapper .suggestion-item:hover {
+  background-color: #f8fafd;
+}
+
 .searchBar button {
   padding: 13px 22px;
   font-size: 1rem;
@@ -268,6 +308,7 @@ body {
   border: none;
   box-shadow: 0 2px 12px rgba(255, 77, 77, 0.09);
 }
+
 .searchBar button:hover {
   background: linear-gradient(90deg, var(--primary-hover), var(--accent));
   transform: scale(1.05);
@@ -393,7 +434,13 @@ body {
     grid-template-columns: 1fr;
   }
 }
-
+@media (max-width: 1157) {
+  .hero-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+  }
+}
 /* Individual card */
 .restaurantsDetail,
 .deliveryDetail {
@@ -546,39 +593,6 @@ body {
   box-shadow: 0 8px 27px rgba(67, 233, 123, 0.16);
 }
 
-/* Quantity Control */
-/* .quantityControl {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.7rem;
-}
-.qtyBtn {
-  padding: 0.43rem 1rem;
-  font-size: 1.09rem;
-  background: linear-gradient(90deg, var(--accent) 40%, var(--primary) 100%);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: background 0.18s, transform 0.12s;
-}
-.qtyBtn:hover {
-  background: linear-gradient(
-    90deg,
-    var(--primary-hover) 15%,
-    var(--accent) 100%
-  );
-  transform: scale(1.09);
-}
-.qtyDisplay {
-  font-weight: bold;
-  font-size: 1rem;
-  min-width: 27px;
-  text-align: center;
-} */
-
 /* Footer */
 .appFooter {
   background: var(--footer-bg);
@@ -715,6 +729,7 @@ body {
   .logo {
     height: 12vh;
     max-height: 46px;
+    top: 70%;
   }
   .hero-container {
     top: 78%;
@@ -722,25 +737,39 @@ body {
   .quotes {
     margin: 19px 8px;
   }
+  .navbar {
+    padding: 0 10px;
+  }
+  .newUser {
+    display: flex;
+    gap: 8px;
+  }
+  .newUser .login,
+  .newUser .signUp {
+    font-weight: 400;
+    font-size: 0.6rem;
+    padding: 9px 10px;
+  }
+  .navbar {
+    padding: 0 12px;
+    height: 60px;
+  }
+  .navbar_logo img {
+    height: 40px;
+    cursor: pointer;
+  }
+  .hero-container {
+    position: absolute;
+    top: 73%;
+  }
 }
-
-/* Reset and Base */
-/* html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Roboto, sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
-  overflow-x: hidden;
-} */
 
 /* Overlay Panel */
 #detailPanel {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: rgba(15, 15, 15, 0.75);
   backdrop-filter: blur(10px);
   display: flex;
@@ -753,7 +782,7 @@ body {
 }
 
 /* Detail Content Container */
-.detail-content {
+.detail-rest {
   display: flex;
   flex-direction: row;
   width: 95%;
@@ -794,6 +823,9 @@ body {
   justify-content: flex-start;
   gap: 1rem;
   overflow: hidden; /* ✅ Prevent scroll */
+}
+.left-section::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 /* Right Section */
@@ -909,16 +941,16 @@ body {
 /* Close Button */
 .close-btn {
   position: absolute;
-  top: 0.5rem;
-  right: 1rem;
+  top: 0.4rem;
+  right: 0.8rem;
   font-size: 2rem;
   color: #e74c3c;
   cursor: pointer;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .detail-content {
+@media (max-width: 1024px) {
+  .detail-rest {
     flex-direction: column;
     height: auto;
     max-height: 95vh;
@@ -934,15 +966,17 @@ body {
     padding: 1rem;
     height: auto;
     overflow: auto;
+    box-shadow: inset 0 -10px 10px -10px rgba(126, 124, 124, 0.297);
   }
 
   .right-section {
     padding: 0 1rem;
-    height: 500px;
+    height: 400px;
+    gap: 1rem;
   }
 
   .slider-frame {
-    height: 70%;
+    height: 75%;
   }
 
   #sliderImage {
@@ -950,5 +984,138 @@ body {
   }
   #detailImg {
     height: 250px;
+  }
+}
+
+/* Delivery Content Layout */
+.detail-deli {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  max-width: 1200px;
+  height: 90vh;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+  animation: slideUp 0.5s ease-out;
+  transition: all 0.3s ease-in-out;
+  padding: 1.5rem;
+}
+
+/* Hide Scrollbar */
+.detail-deli::-webkit-scrollbar {
+  display: none;
+}
+.detail-deli {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.food-image {
+  width: 100%;
+  height: 45%;
+}
+/* Food Image */
+#detailImgdeli {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Info Section */
+.item-info-deli {
+  width: 100%;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.item-info-deli h2 {
+  font-size: 3rem;
+  margin-bottom: 0.3rem;
+  color: #2c3e50;
+}
+
+.item-info-deli p {
+  margin: 0.6rem 0;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Cart Controls */
+.cartControls {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.cartControls button {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  background-color: #2ecc71;
+  color: white;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cartControls button:hover {
+  background-color: #27ae60;
+  transform: scale(1.05);
+}
+
+#cartCount {
+  font-weight: bold;
+  background-color: #ecf0f1;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detail-deli {
+    padding: 1rem;
+    max-width: 95%;
+  }
+
+  .item-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .food-image img {
+    max-height: 220px;
+  }
+  .cartControls {
+    flex-direction: column;
+    gap: 0.6rem;
   }
 }
