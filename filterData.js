@@ -104,55 +104,69 @@ const filterIdsOfDelivery = [
   "priceFilterDeli",
 ];
 const foodNames = [
-  "Butter Chicken",
-  "Paneer Butter Masala",
-  "Veg Biryani",
-  "Chicken Biryani",
-  "Pasta Alfredo",
   "Paneer Tikka",
-  "Chowmein",
-  "Rogan Josh",
+  "Chicken Biryani",
+  "Margherita Pizza",
+  "Butter Chicken",
+  "Veg Hakka Noodles",
+  "Mutton Rogan Josh",
   "Masala Dosa",
-  "Shahi Paneer",
-  "Vada Pav",
-  "Fish Curry",
-  "Rajma Chawal",
-  "Fried Rice",
-  "Pizza Margherita",
-  "Lassi",
-  "Cappuccino",
-  "Masala Chai",
-  "Sweet Lassi",
-  "Spring Rolls",
-  "Garlic Bread",
-  "Burger",
-  "Cold Coffee",
-  "Fresh Juice",
-  "Pasta Arrabiata",
-  "Mocktail Virgin Mojito",
-  "Latte",
-  "Ice Cream Sundae",
-  "French Fries",
-  "Taco",
-  "Sandwich",
+  "Tandoori Chicken",
   "Pav Bhaji",
-  "Hot Dog",
-  "Noodles",
+  "Fish Curry",
+  "Chole Bhature",
+  "Egg Fried Rice",
+  "Cheese Burst Pizza",
+  "Dal Makhani",
+  "Chicken Shawarma",
+  "Veg Manchurian",
+  "Kathi Roll",
+  "Idli Sambar",
+  "Chicken Tikka Wrap",
+  "Veg Pulao",
   "Momos",
-  "Nachos",
-  "Cheese Balls",
-  "Soft Drink Coke",
-  "Soft Drink Pepsi",
-  "Soft Drink Sprite",
-  "Soft Drink Fanta",
-  "Soft Drink Thums Up",
-  "Soft Drink Limca",
-  "Soft Drink Mountain Dew",
-  "Soft Drink 7Up",
-  "Cold Mojito",
-  "Cold Blue Lagoon",
-  "Chocolate Shake",
+  "Keema Pav",
+  "Falafel Bowl",
+  "Chicken Korma",
+  "Rajma Chawal",
+  "Masala Chai",
+  "Cold Coffee",
+  "Fresh Lime Soda",
+  "Mango Lassi",
+  "Green Tea",
+  "Cappuccino",
+  "Iced Americano",
+  "Strawberry Milkshake",
+  "Watermelon Juice",
+  "Hot Chocolate",
+  "Virgin Mojito",
+  "Peach Iced Tea",
+  "Coconut Water",
+  "Onion Rings",
+  "Grilled Sandwich",
+  "Veg Hot Dog",
+  "Chicken Hot Dog",
+  "Pizza Slice",
+  "Paneer Tikka Roll",
+  "Chicken Tikka Roll",
+  "Veg Momos",
+  "Chicken Momos",
+  "Garlic Bread",
+  "Cheesy Nachos",
+  "Veg Puff",
+  "Coca-Cola",
+  "Pepsi",
+  "Sprite",
+  "Mountain Dew",
+  "Fanta",
+  "Thums Up",
+  "Limca",
+  "7UP",
+  "Iced Tea",
+  "Blue Lagoon",
+  "Strawberry Shake",
 ];
+
 const cuisineTypes = [
   "North Indian",
   "Hyderabadi",
@@ -181,31 +195,3 @@ const categories = ["Main Course", "Drink", "Fast Food", "Cold Drink"];
 const isVeg = ["yes", "No"];
 const ratings = [3.8, 3.9, 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9];
 const menuImages = ["m1", "m2", "m3", "m4"];
-
-//creating dumpy data of restaurants
-
-// for (let i = 0; i < 100; i++) {
-//   const obj = {};
-//   obj["image"] = image[Math.floor(Math.random() * image.length)];
-//   obj["rest_name"] =
-//     restaurantNames[Math.floor(Math.random() * restaurantNames.length)];
-//   obj["food_type"] = foodTypes[Math.floor(Math.random() * foodTypes.length)];
-//   obj["price_for_two"] = Math.floor(Math.random() * 2401 + 100);
-//   obj["location"] =
-//     mumbaiLocations[Math.floor(Math.random() * mumbaiLocations.length)];
-//   obj["distance_from_customer_house"] = `${(Math.random() * 30).toFixed(2)} km`;
-//   obj["alcohol"] = Math.random() < 0.7 ? "Yes" : "No";
-//   obj["restaurant_open_time"] = `${Math.floor(Math.random() * 4 + 8)}:00 AM`; // 8–11 AM
-//   obj["restaurant_close_time"] = `${Math.floor(
-//     Math.random() * 4 + 9 + 12
-//   )}:00 PM`; // 9 PM–12 AM
-
-//   restaurant.push(obj);
-// }
-// Convert to JSON string
-// const jsonData = JSON.stringify(restaurant, null, 2);
-
-// // Write to file
-// fs.writeFileSync("restaurants.json", jsonData);
-
-// console.log("✅ restaurants.json file created successfully!");
