@@ -1,3 +1,7 @@
+@font-face {
+  font-family: customfont;
+  src: url(./font/windsol/Windsol-Regular.ttf);
+}
 :root {
   --primary: #ff4d4d;
   --primary-hover: #e63939;
@@ -205,7 +209,8 @@ body {
 .quotes {
   text-align: center;
   margin: 44px 18px;
-  font-family: "Poppins", "Nunito", sans-serif;
+  /* font-family: "Poppins", "Nunito", sans-serif; */
+  font-family: customfont;
 }
 .quote {
   font-size: 2rem;
