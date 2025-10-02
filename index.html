@@ -7,11 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
     />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="media.css" />
+    <link rel="stylesheet" href="animation.css" />
   </head>
   <body>
     <div class="video_section">
@@ -30,15 +39,52 @@
       </div>
     </div>
 
+    <!-- 🌗 Slide-in Menu Overlay -->
+    <div class="menuOverlay" id="menuOverlay"></div>
+    <aside class="sideMenu" id="sideMenu">
+      <!-- 🔙 Close Arrow -->
+      <button class="closeMenu" id="closeMenuBtn">&#8594;</button>
+
+      <!-- 🌗 Theme Toggle -->
+      <div class="themeToggle">
+        <button id="toggleThemeBtn">🌞 Light / 🌙 Dark</button>
+      </div>
+
+      <!-- 👤 Profile -->
+      <div class="profileSection">
+        <img src="./assets/profile.jpg" alt="Profile" class="profilePic" />
+        <h3>Ritesh Rana</h3>
+        <p>Food Explorer</p>
+      </div>
+
+      <!-- 📋 Navigation Links -->
+      <nav class="menuLinks">
+        <a href="#home">🏠 Home</a>
+        <a href="#restaurants">🍴 Restaurants</a>
+        <a href="#delivery">🛵 My Orders</a>
+        <a href="#favorites">❤️ Favorites</a>
+        <a href="#settings">⚙️ Settings</a>
+        <a href="#">🚪 Log Out</a>
+      </nav>
+    </aside>
     <nav class="navbar">
       <div class="navbar_logo">
         <img src="./assets/logo_nav.png" alt="" />
       </div>
       <div class="newUser">
-        <div class="login">Log in</div>
-        <div class="signUp">Sign up</div>
+        <div class="login">
+          <a href="login.html">Log in</a>
+        </div>
+        <!-- <div class="signUp">
+          <a href="signup.html">Sign up</a>
+        </div> -->
+        <!-- 🍔 Hamburger Icon -->
+        <div class="hamburger" id="hamburgerBtn">
+          <i class="fa-solid fa-bars"></i>
+        </div>
       </div>
     </nav>
+
     <main class="mainBody">
       <div class="quotes">
         <p class="quote highlight">Feel Hungry</p>
