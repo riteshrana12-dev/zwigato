@@ -1,0 +1,113 @@
+/* ------------------------------------ */
+/* -- Base Styles for Login & Signup -- */
+/* ------------------------------------ */
+
+/* Define the custom property for angle animation */
+@property --bg-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Keyframes to animate the --bg-angle from 0deg to 360deg */
+@keyframes spin {
+  to {
+    --bg-angle: 360deg;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+/* Wrapper with animated rotating gradient border */
+.gradient-border-wrapper {
+  border: 6px solid transparent; /* space for gradient border */
+  border-radius: 12px;
+
+  /* Two layered backgrounds: content + animated rotating gradient border */
+  background: linear-gradient(#fff, #fff) padding-box,
+    /* background inside border */
+      conic-gradient(from var(--bg-angle), #ff6f00, #ffcc80, #00c6ff, #ff6f00)
+      border-box; /* rotating gradient border */
+
+  /* Animation for the rotating border gradient */
+  animation: spin 2.5s linear infinite;
+  box-sizing: border-box;
+}
+
+/* Login/Signup container sits inside the wrapper */
+.login-container,
+.signup-container {
+  position: relative;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  padding: 2rem;
+  box-sizing: border-box;
+  z-index: 1;
+  margin: auto;
+  transition: background-color 0.3s ease;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin: 0 0 1rem 0;
+  transition: color 0.3s ease;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff6f00;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #e65c00;
+}
+
+.link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.link a {
+  color: #ff6f00;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link a:hover {
+  text-decoration: underline;
+}
