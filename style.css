@@ -9,7 +9,7 @@
   --surface: #fff;
   --surface-glass: rgba(255, 255, 255, 0.45);
   --bg: #f7f8fa;
-  --footer-bg: #181818;
+  --footer-bg: linear-gradient(-45deg, #ffffff, #f5f5f5, #bdbdbd, #212121);
   --shadow-large: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
   --blur: blur(8px);
   --text-main: #232235;
@@ -29,7 +29,150 @@ body {
   font-family: "Nunito", "Inter", "Poppins", sans-serif;
   color: var(--text-main);
 }
+/* --- Dark Theme Styles for Zwigato -- */
+body.dark-mode {
+  --primary: #ff6b6b;
+  --primary-hover: #ff4757;
+  --accent: #feca57;
+  --surface: #2d3436;
+  --surface-glass: rgba(45, 52, 54, 0.6);
+  --bg: #1e272e;
+  --footer-bg: linear-gradient(-45deg, #121212, #2d3436, #3d3d3d, #1e272e);
+  --text-main: #f1f2f6;
+  --text-light: #2d3436;
+}
 
+/* --- General Elements in Dark Mode --- */
+
+body.dark-mode .navbar {
+  background: linear-gradient(90deg, #2d3436 0%, #1e272e 100%);
+  border-bottom: 1.5px solid #4a4a4a;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .newUser .login a {
+  background: linear-gradient(90deg, #3d3d3d 30%, #2d3436 100%);
+  color: #f1f2f6;
+  border: 1.5px solid #5a5a5a;
+}
+
+body.dark-mode .newUser .login a:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary-hover);
+}
+
+body.dark-mode .mainBody {
+  background: linear-gradient(135deg, #2b2b2b, #3d3d3d, #2f3640, #1e272e);
+  background-size: 400% 400%;
+  animation: darkFlow 12s ease infinite;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .quote {
+  color: #dcdde1;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.dark-mode .quote.highlight {
+  color: var(--primary);
+}
+
+body.dark-mode .searchWrapper input[type="search"] {
+  background: #3d3d3d;
+  border-color: #5a5a5a;
+  color: #f1f2f6;
+}
+
+body.dark-mode .searchWrapper input[type="search"]::placeholder {
+  color: #a4a4a4;
+}
+
+body.dark-mode .searchWrapper input[type="search"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.15);
+}
+
+body.dark-mode .twoOption > p {
+  color: #f1f2f6;
+}
+
+body.dark-mode .filters select {
+  background: #3d3d3d;
+  color: #f1f2f6;
+  border: 2px solid #5a5a5a;
+}
+
+body.dark-mode .appFooter {
+  color: #f1f2f6;
+}
+
+body.dark-mode .footerLinks a {
+  color: #a4a4a4;
+}
+
+body.dark-mode .footerLinks a:hover {
+  background: var(--accent);
+  color: #1e272e;
+}
+
+/* --- Menu Specific --- */
+body.dark-mode .hamburger {
+  background-color: #2d3436;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .sideMenu {
+  background: linear-gradient(135deg, #1e272e, #2d3436);
+  color: #f1f2f6;
+}
+
+body.dark-mode .profileSection {
+  border-bottom: 1px solid #4a4a4a;
+}
+
+body.dark-mode .menuLinks a {
+  color: #f1f2f6;
+}
+
+body.dark-mode .menuLinks a:hover {
+  color: var(--accent);
+}
+
+body.dark-mode #toggleThemeBtn {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+body.dark-mode #toggleThemeBtn:hover {
+  background-color: var(--accent);
+  color: #1e272e;
+}
+
+/* --- Detail Cards --- */
+body.dark-mode .restaurantsDetail,
+body.dark-mode .deliveryDetail {
+  border: 1px solid rgba(241, 242, 246, 0.1);
+}
+
+body.dark-mode .restaurantsDescription,
+body.dark-mode .deliveryDescription {
+  background: rgba(45, 52, 54, 0.88);
+}
+
+body.dark-mode .ratings {
+  color: #f1f2f6;
+}
+
+body.dark-mode .food_type,
+body.dark-mode .two_price,
+body.dark-mode .location,
+body.dark-mode .time,
+body.dark-mode .distance {
+  color: #b2bec3;
+}
 .video_section {
   position: relative;
   width: 100%;
@@ -116,21 +259,120 @@ body {
   transform: translateX(-50%);
   animation: scroll 1.5s infinite;
 }
-@keyframes scroll {
-  0% {
-    top: 10px;
-    opacity: 1;
-  }
-  50% {
-    top: 30px;
-    opacity: 0.5;
-  }
-  100% {
-    top: 10px;
-    opacity: 1;
-  }
+
+/* 🌗 Overlay */
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 90;
 }
 
+/* 🍽️ Slide-in Menu */
+.sideMenu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(135deg, #f9f9f9, #eaeaea);
+  color: #212121;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
+  transition: right 0.4s ease, background 0.6s ease;
+  z-index: 95;
+}
+
+/* Active state */
+.menuOverlay.active {
+  display: block;
+}
+
+.sideMenu.active {
+  right: 0;
+}
+
+/* 🔙 Close Arrow */
+.closeMenu {
+  align-self: flex-end;
+  font-size: 26px;
+  background: none;
+  border: none;
+  color: #ff5722;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.closeMenu:hover {
+  transform: translateX(-4px);
+  color: #b71c1c;
+}
+
+/* 🌗 Theme Toggle */
+.themeToggle {
+  text-align: center;
+}
+
+#toggleThemeBtn {
+  background-color: transparent;
+  border: 1px solid #ff5722;
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #ff5722;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#toggleThemeBtn:hover {
+  background-color: #ff5722;
+  color: #ffffff;
+}
+
+/* 👤 Profile */
+.profileSection {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+}
+
+.profilePic {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 📋 Navigation */
+.menuLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menuLinks a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #212121;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menuLinks a:hover {
+  color: #ff5722;
+}
 /* Navbar container */
 .navbar {
   position: sticky;
@@ -147,16 +389,20 @@ body {
   z-index: 10;
   border-bottom: 1.5px solid #f3e7e7;
 }
+
 .navbar_logo img {
   height: 50px;
   cursor: pointer;
 }
+
 .newUser {
   display: flex;
   gap: 17px;
 }
-.newUser .login,
-.newUser .signUp {
+
+/* Updated selectors to target <a> inside .login and .signUp */
+.newUser .login a,
+.newUser .signUp a {
   font-family: "Poppins", "Nunito", sans-serif;
   font-weight: 700;
   font-size: 1rem;
@@ -167,38 +413,60 @@ body {
     background 0.18s;
   box-shadow: 0 2px 8px rgba(255, 77, 77, 0.04);
   border: none;
+  text-decoration: none;
+  display: inline-block;
 }
-.newUser .login {
+
+/* 🍔 Hamburger Icon */
+.hamburger {
+  cursor: pointer;
+  margin: auto;
+  z-index: 100;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.hamburger > i {
+  font-size: 20px;
+  color: red;
+}
+/* Login button styles */
+.newUser .login a {
   background: linear-gradient(90deg, #fff 30%, #f8fafd 100%);
   color: #333;
   border: 1.5px solid #d1d5db;
 }
-.newUser .login:hover {
+
+.newUser .login a:hover {
   background: var(--primary);
   color: #fff;
   transform: scale(1.03);
   border-color: var(--primary-hover);
 }
-.newUser .signUp {
+
+/* SignUp button styles */
+/* .newUser .signUp a {
   background: linear-gradient(90deg, var(--primary) 40%, var(--accent) 100%);
   color: #fff;
   border: 1.5px solid var(--primary);
-  font-weight: 700;
-}
-.newUser .signUp:hover {
-  background: linear-gradient(
-    90deg,
-    var(--primary-hover) 0%,
-    var(--accent) 100%
-  );
-  border-color: var(--primary-hover);
-  transform: translateY(-3px) scale(1.05);
-}
+  } */
 
-/* Main container */
+/* .newUser .signUp a:hover {
+    background: linear-gradient(
+      90deg,
+      var(--primary-hover) 0%,
+      var(--accent) 100%
+      );
+      border-color: var(--primary-hover);
+      transform: translateY(-3px) scale(1.05);
+      } */
+
+/* mainContainer */
 .mainBody {
   padding: 95px 50px 54px 50px;
-  background-color: #fff;
+  background: linear-gradient(135deg, #ffffff, #e9e1e1, #f4dfe4, #f5f5f5);
+  background-size: 400% 400%;
+  animation: lightFlow 12s ease infinite;
   text-align: center;
   font-family: "Poppins", "Nunito", sans-serif;
   border-radius: 16px;
@@ -420,32 +688,6 @@ body {
   gap: 2.1rem;
 }
 
-/* Responsive breakpoints */
-@media (max-width: 1200px) {
-  .restaurantsSection,
-  .deliverySection {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 900px) {
-  .restaurantsSection,
-  .deliverySection {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 600px) {
-  .restaurantsSection,
-  .deliverySection {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 1157) {
-  .hero-container {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-  }
-}
 /* Individual card */
 .restaurantsDetail,
 .deliveryDetail {
@@ -493,17 +735,6 @@ body {
 .deliveryDetail:hover img {
   transform: scale(1.08) rotate(-1deg);
   filter: brightness(1.11) saturate(1.13);
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
 /* Description section */
@@ -558,22 +789,6 @@ body {
   opacity: 0.82;
 }
 
-/* Entrance animation */
-@keyframes fadeSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-4px) scale(1.04);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 /* Scroll to Top Button */
 #scrollToTopBtn {
   position: fixed;
@@ -601,13 +816,15 @@ body {
 /* Footer */
 .appFooter {
   background: var(--footer-bg);
-  color: #f5f5f5;
+  animation: gradientFlow 15s ease infinite;
+  color: #212121;
+  background-size: 400% 400%;
   padding: 2.7rem 1.1rem;
   font-size: 0.99rem;
   text-align: center;
   border-top-left-radius: 36px;
   border-top-right-radius: 36px;
-  box-shadow: 0 -6px 20px rgba(31, 38, 135, 0.11);
+  box-shadow: 0 -6px 20px rgba(5, 10, 92, 0.11);
   letter-spacing: 0.1em;
 }
 .footerContent {
@@ -680,95 +897,6 @@ body {
   transform: scale(1.03);
 }
 
-/* Responsive tweaks */
-@media (max-width: 900px) {
-  .mainBody {
-    padding: 70px 10px 25px 10px;
-  }
-  .footerContent {
-    gap: 1.35rem;
-    padding: 0 4px;
-  }
-}
-@media (max-width: 768px) {
-  .hero-text {
-    font-size: 2.05rem;
-  }
-  .logo {
-    height: 10vh;
-    max-height: 60px;
-  }
-  .hero-container {
-    top: 80%;
-  }
-  .scroll-down {
-    width: 24px;
-    height: 38px;
-  }
-  .scroll-down span {
-    width: 5px;
-    height: 5px;
-  }
-  .delivery_dining > .twoOption {
-    width: 95vw;
-    max-width: 220px;
-  }
-  .mainBody {
-    padding: 55px 7px;
-  }
-}
-
-@media (max-width: 600px) {
-  .restaurantsSection,
-  .deliverySection {
-    grid-template-columns: 1fr;
-  }
-  .footerContent {
-    gap: 1.2rem;
-    padding: 0 2px;
-  }
-  .footerLinks {
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-  .logo {
-    height: 12vh;
-    max-height: 46px;
-    top: 70%;
-  }
-  .hero-container {
-    top: 78%;
-  }
-  .quotes {
-    margin: 19px 8px;
-  }
-  .navbar {
-    padding: 0 10px;
-  }
-  .newUser {
-    display: flex;
-    gap: 8px;
-  }
-  .newUser .login,
-  .newUser .signUp {
-    font-weight: 400;
-    font-size: 0.6rem;
-    padding: 9px 10px;
-  }
-  .navbar {
-    padding: 0 12px;
-    height: 60px;
-  }
-  .navbar_logo img {
-    height: 40px;
-    cursor: pointer;
-  }
-  .hero-container {
-    position: absolute;
-    top: 73%;
-  }
-}
-
 /* Overlay Panel */
 #detailPanel {
   position: fixed;
@@ -802,16 +930,6 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 /* Split Layout */
 .split-layout {
   display: flex;
@@ -953,45 +1071,6 @@ body {
   cursor: pointer;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .detail-rest {
-    flex-direction: column;
-    height: auto;
-    max-height: 95vh;
-    overflow-y: auto;
-  }
-
-  .split-layout {
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .left-section {
-    padding: 1rem;
-    height: auto;
-    overflow: auto;
-    box-shadow: inset 0 -10px 10px -10px rgba(126, 124, 124, 0.297);
-  }
-
-  .right-section {
-    padding: 0 1rem;
-    height: 400px;
-    gap: 1rem;
-  }
-
-  .slider-frame {
-    height: 75%;
-  }
-
-  #sliderImage {
-    height: 100%;
-  }
-  #detailImg {
-    height: 250px;
-  }
-}
-
 /* Delivery Content Layout */
 .detail-deli {
   display: flex;
@@ -1015,27 +1094,6 @@ body {
 }
 .detail-deli {
   scrollbar-width: none; /* Firefox */
-}
-
-/* Animations */
-@keyframes slideUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .food-image {
@@ -1103,24 +1161,4 @@ body {
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
   font-size: 1rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .detail-deli {
-    padding: 1rem;
-    max-width: 95%;
-  }
-
-  .item-info h2 {
-    font-size: 1.5rem;
-  }
-
-  .food-image img {
-    max-height: 220px;
-  }
-  .cartControls {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
 }
