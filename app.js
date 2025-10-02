@@ -19,6 +19,7 @@ deliverySection.classList.add("restaurantsSection");
 // showfood.appendChild(deliverySection);
 const optionsAddedMap = {}; // Track which filters have been updated
 const filterSelections = {};
+
 tasteTrip.addEventListener("click", () => {
   filtersMainOptionDiv.innerHTML = "";
   filtertext.textContent = " ";
@@ -700,3 +701,65 @@ function cartFunction() {
     });
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Element Selections ---
+  const hamburgerBtn = document.getElementById("hamburgerBtn");
+  const sideMenu = document.getElementById("sideMenu");
+  const menuOverlay = document.getElementById("menuOverlay");
+  const closeMenuBtn = document.getElementById("closeMenuBtn");
+  const toggleThemeBtn = document.getElementById("toggleThemeBtn");
+  const body = document.body;
+
+  // --- Menu Functionality ---
+
+  // Function to open the menu
+  const openMenu = () => {
+    sideMenu.classList.add("active");
+    menuOverlay.classList.add("active");
+  };
+
+  // Function to close the menu
+  const closeMenu = () => {
+    sideMenu.classList.remove("active");
+    menuOverlay.classList.remove("active");
+  };
+
+  // Event listeners for opening and closing the menu
+  hamburgerBtn.addEventListener("click", openMenu);
+  closeMenuBtn.addEventListener("click", closeMenu);
+  menuOverlay.addEventListener("click", closeMenu);
+
+  // --- Theme Toggle Functionality ---
+
+  // Function to apply the theme based on localStorage
+  const applyInitialTheme = () => {
+    const savedTheme = localStorage.getItem("theme");
+    // If 'dark' is saved, add the dark-mode class.
+    if (savedTheme === "dark") {
+      body.classList.add("dark-mode");
+    }
+    // No 'else' needed; the default is the light theme.
+  };
+
+  // Function to handle the theme toggle
+  const toggleTheme = () => {
+    // Toggle the 'dark-mode' class on the body
+    body.classList.toggle("dark-mode");
+
+    // Check if dark mode is now active and save the choice to localStorage
+    if (body.classList.contains("dark-mode")) {
+      localStorage.setItem("theme", "dark");
+    } else {
+      localStorage.setItem("theme", "light");
+    }
+  };
+
+  // Event listener for the theme toggle button
+  toggleThemeBtn.addEventListener("click", toggleTheme);
+
+  // --- Initial Setup ---
+
+  // Apply the saved theme as soon as the page loads
+  applyInitialTheme();
+});
