@@ -13,6 +13,44 @@
   .quote.highlight {
     font-size: 2.2rem;
   }
+  .detail-deli {
+    padding: 16px;
+    width: 80%;
+    height: 90vh;
+    max-height: 95vh;
+    /* overflow-y: auto; Make the delivery detail panel scrollable */
+    display: flex;
+    flex-direction: column;
+  }
+  .detail-deli::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for a cleaner look */
+  }
+  .detail-deli {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .food-image {
+    height: 45%;
+    padding: 0 10px;
+  }
+  .item-info-deli {
+    height: 65%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .item-info-deli > h2 {
+    font-size: 2.5rem;
+  }
+  .item-info-deli > p {
+    font-size: 1.5rem;
+  }
+  .close-btn {
+    right: 0.2rem;
+    font-size: 2.4rem;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -105,10 +143,11 @@
   }
 
   .detail-deli {
+    padding: 16px;
     width: 80%;
     height: 90vh;
     max-height: 95vh;
-    overflow-y: auto; /* Make the delivery detail panel scrollable */
+    /* overflow-y: auto; Make the delivery detail panel scrollable */
     display: flex;
     flex-direction: column;
   }
@@ -119,12 +158,23 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-
+  .food-image {
+    height: 40%;
+    padding: 0 10px;
+  }
   .item-info-deli {
+    height: 60%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 0;
+  }
+  .item-info-deli > h2 {
+    font-size: 2rem;
+  }
+  .item-info-deli > p {
+    font-size: 1rem;
   }
 }
 
