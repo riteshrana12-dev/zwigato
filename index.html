@@ -45,11 +45,6 @@
       <!-- 🔙 Close Arrow -->
       <button class="closeMenu" id="closeMenuBtn">&#8594;</button>
 
-      <!-- 🌗 Theme Toggle -->
-      <div class="themeToggle">
-        <button id="toggleThemeBtn">🌞 Light / 🌙 Dark</button>
-      </div>
-
       <!-- 👤 Profile -->
       <div class="profileSection">
         <img src="./assets/profile.jpg" alt="Profile" class="profilePic" />
@@ -59,13 +54,29 @@
 
       <!-- 📋 Navigation Links -->
       <nav class="menuLinks">
-        <a href="#home">🏠 Home</a>
-        <a href="#restaurants">🍴 Restaurants</a>
-        <a href="#delivery">🛵 My Orders</a>
-        <a href="#favorites">❤️ Favorites</a>
-        <a href="#settings">⚙️ Settings</a>
-        <a href="#">🚪 Log Out</a>
+        <a href="#"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#restaurantsSection"
+          ><i class="fa-solid fa-utensils"></i> Restaurants</a
+        >
+        <a href="#deliverySection"
+          ><i class="fa-solid fa-bowl-food"></i> Delivery</a
+        >
+        <a href="order.html" target="_blank"
+          ><i class="fa-solid fa-bowl-food"></i> My Orders</a
+        >
+        <a href="#favorites"><i class="fa-solid fa-star"></i> Favorites</a>
+        <a href="login.html"
+          ><i class="fa-solid fa-right-from-bracket"></i> Log Out</a
+        >
       </nav>
+
+      <!-- 🌗 Theme Toggle -->
+      <div class="themeToggle">
+        <button id="toggleThemeBtn">
+          <i class="fa-solid fa-sun"></i> Light /
+          <i class="fa-solid fa-moon"></i> Dark
+        </button>
+      </div>
     </aside>
     <nav class="navbar">
       <div class="navbar_logo">
