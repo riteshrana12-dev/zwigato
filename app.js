@@ -327,7 +327,7 @@ function showFoodItems(dataArray, type) {
             </div>
             <div class="deliveryAllDetail">
               <p class="price">₹${item.price}</p>
-              <p class="ratings">⭐ ${item.rating}</p>
+              <p class="ratings">★ ${item.rating}</p>
             </div>
             <div class="deliveryAllDetail">
               <p class="time">⏱️ ${item.prep_time} min</p>
@@ -409,7 +409,7 @@ function detailShow(allCards, dataArray, type, menu) {
               <p><strong>Cuisine:</strong> ${itemData.cuisine_type}</p>
               <p><strong>Price:</strong> ₹${itemData.price}</p>
               <p><strong>Veg:</strong> ${itemData.is_veg ? "Yes" : "No"}</p>
-              <p><strong>Rating:</strong> ⭐ ${itemData.rating}</p>
+              <p><strong>Rating:</strong> ★ ${itemData.rating}</p>
               <p><strong>Prep Time:</strong> ⏱️ ${itemData.prep_time} mins</p>
             </div>
 
