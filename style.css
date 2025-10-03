@@ -1,6 +1,26 @@
 @font-face {
-  font-family: customfont;
-  src: url(./font/windsol/Windsol-Regular.ttf);
+  font-family: "Windsol";
+  src: url("./font/windsol/Windsol-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "KidzBlock";
+  src: url("./font/kidz_block/Kidz Block.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "silly_summer";
+  src: url("./font/silly_summer/Silly\ Summer.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "short_cake";
+  src: url("./font/short_cake/Short\ Cake.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "scaryring";
+  src: url("./font/scaryring/Scaryring.otf") format("truetype");
 }
 :root {
   --primary: #ff4d4d;
@@ -29,6 +49,10 @@ body {
   font-family: "Nunito", "Inter", "Poppins", sans-serif;
   color: var(--text-main);
 }
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
 /* --- Dark Theme Styles for Zwigato -- */
 body.dark-mode {
   --primary: #ff6b6b;
@@ -228,7 +252,7 @@ body.dark-mode .distance {
   padding: 0 1rem;
 }
 .hero-text {
-  font-family: "Poppins", "Nunito", sans-serif;
+  font-family: KidzBlock;
   font-size: 2.6rem;
   font-weight: 700;
   margin-bottom: 20px;
@@ -403,9 +427,8 @@ body.dark-mode .distance {
 /* Updated selectors to target <a> inside .login and .signUp */
 .newUser .login a,
 .newUser .signUp a {
-  font-family: "Poppins", "Nunito", sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
+  font-family: short_cake;
+  font-size: 1.2rem;
   padding: 9px 22px;
   border-radius: 8px;
   cursor: pointer;
@@ -444,23 +467,6 @@ body.dark-mode .distance {
   border-color: var(--primary-hover);
 }
 
-/* SignUp button styles */
-/* .newUser .signUp a {
-  background: linear-gradient(90deg, var(--primary) 40%, var(--accent) 100%);
-  color: #fff;
-  border: 1.5px solid var(--primary);
-  } */
-
-/* .newUser .signUp a:hover {
-    background: linear-gradient(
-      90deg,
-      var(--primary-hover) 0%,
-      var(--accent) 100%
-      );
-      border-color: var(--primary-hover);
-      transform: translateY(-3px) scale(1.05);
-      } */
-
 /* mainContainer */
 .mainBody {
   padding: 95px 50px 54px 50px;
@@ -478,7 +484,7 @@ body.dark-mode .distance {
   text-align: center;
   margin: 44px 18px;
   /* font-family: "Poppins", "Nunito", sans-serif; */
-  font-family: customfont;
+  font-family: Windsol;
 }
 .quote {
   font-size: 2rem;
@@ -529,7 +535,7 @@ body.dark-mode .distance {
   border-radius: 10px;
   outline: none;
   transition: border 0.28s ease, box-shadow 0.28s;
-  background: #f8fafd;
+  background: #ffffff;
 }
 
 .searchWrapper input[type="search"]:focus {
@@ -542,6 +548,7 @@ body.dark-mode .distance {
   top: 100%;
   left: 0;
   right: 0;
+  color: black;
   background: #fff;
   border: 2px solid #ddd;
   border-top: none; /* Seamless connection to input */
@@ -553,6 +560,7 @@ body.dark-mode .distance {
   -ms-overflow-style: none;
   z-index: 999;
   display: none; /* Hidden by default */
+  font-family: "Windsol";
 }
 .suggestions::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
@@ -560,7 +568,7 @@ body.dark-mode .distance {
 
 .searchWrapper .suggestion-item {
   padding: 10px 17px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s ease;
 }
@@ -571,6 +579,8 @@ body.dark-mode .distance {
 
 .searchBar button {
   padding: 13px 22px;
+  font-family: "Windsol";
+
   font-size: 1rem;
   border-radius: 10px;
   background: linear-gradient(90deg, var(--primary), var(--accent));
@@ -621,7 +631,8 @@ body.dark-mode .distance {
 }
 .twoOption > p {
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 400;
+  font-family: silly_summer;
   color: #232235;
   letter-spacing: -0.55px;
 }
@@ -645,7 +656,8 @@ body.dark-mode .distance {
   font-size: 1rem;
   border-radius: 8px;
   border: 2px solid #e2e8f0;
-  font-family: "Poppins", "Nunito", sans-serif;
+  /* font-family: "Poppins", "Nunito", sans-serif; */
+  font-family: "Windsol";
   cursor: pointer;
   transition: border 0.22s, box-shadow 0.18s;
   background: #fff;
@@ -762,10 +774,11 @@ body.dark-mode .distance {
   justify-content: space-between;
 }
 .name {
-  font-size: 1.08rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--primary-hover);
-  letter-spacing: -0.2px;
+  letter-spacing: 2px;
+  font-family: scaryring;
 }
 .ratings {
   font-size: 0.89rem;
@@ -776,8 +789,9 @@ body.dark-mode .distance {
   gap: 0.25rem;
 }
 .star-icon {
+  padding-bottom: 6.4px;
   color: #fdd835;
-  font-size: 1.07rem;
+  font-size: 1rem;
 }
 .food_type,
 .two_price,
@@ -867,7 +881,7 @@ body.dark-mode .distance {
 }
 .footerLinks {
   display: flex;
-  gap: 1.2rem;
+  gap: 3rem;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -884,6 +898,9 @@ body.dark-mode .distance {
   background: var(--accent);
   color: #fff;
   transform: scale(1.08);
+  font-family: scaryring;
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
 }
 .footerCredit {
   opacity: 0.7;
@@ -928,6 +945,7 @@ body.dark-mode .distance {
   position: relative;
   animation: slideUp 0.5s ease-out;
   transition: all 0.3s ease-in-out;
+  border: 1px solid green;
 }
 
 /* Split Layout */
@@ -973,6 +991,7 @@ body.dark-mode .distance {
 
 /* Info Text */
 #detailInfo h2 {
+  font-family: KidzBlock;
   font-size: 2rem;
   margin-bottom: 0.5rem;
   color: #2c3e50;
@@ -981,6 +1000,7 @@ body.dark-mode .distance {
   margin: 0.4rem 0;
   font-size: 1rem;
   line-height: 1.5;
+  color: #333;
 }
 
 /* Booking and Cart */
@@ -1064,8 +1084,8 @@ body.dark-mode .distance {
 /* Close Button */
 .close-btn {
   position: absolute;
-  top: 0.4rem;
-  right: 0.8rem;
+  top: 0;
+  right: 0.3rem;
   font-size: 2rem;
   color: #e74c3c;
   cursor: pointer;
@@ -1079,7 +1099,7 @@ body.dark-mode .distance {
   max-width: 1200px;
   height: 90vh;
   background: linear-gradient(145deg, #ffffff, #f0f0f0);
-  border-radius: 20px;
+  border-radius: 20px 0px 20px 0px;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   position: relative;
@@ -1098,7 +1118,7 @@ body.dark-mode .distance {
 
 .food-image {
   width: 100%;
-  height: 45%;
+  height: 40%;
 }
 /* Food Image */
 #detailImgdeli {
@@ -1113,11 +1133,14 @@ body.dark-mode .distance {
 /* Info Section */
 .item-info-deli {
   width: 100%;
+  height: 60%;
   margin-top: 1.5rem;
   text-align: center;
 }
 
 .item-info-deli h2 {
+  font-family: KidzBlock;
+
   font-size: 3rem;
   margin-bottom: 0.3rem;
   color: #2c3e50;
