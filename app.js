@@ -20,7 +20,26 @@ deliverySection.classList.add("restaurantsSection");
 const optionsAddedMap = {}; // Track which filters have been updated
 const filterSelections = {};
 
+// home
+document.querySelector("#refreshLink").addEventListener("click", (e) => {
+  e.preventDefault(); // prevent default anchor behavior
+  window.location.reload();
+});
+
+// for restaurants
+document.querySelector("#restaurantMenu").addEventListener("click", () => {
+  restaurantFooterAndTastetripFunction();
+});
+document
+  .querySelector("#restaurantFooterAndMenu")
+  .addEventListener("click", () => {
+    restaurantFooterAndTastetripFunction();
+  });
 tasteTrip.addEventListener("click", () => {
+  restaurantFooterAndTastetripFunction();
+});
+
+function restaurantFooterAndTastetripFunction() {
   filtersMainOptionDiv.innerHTML = "";
   filtertext.textContent = " ";
   filtertext.textContent = "Filter Restaurants";
@@ -37,9 +56,24 @@ tasteTrip.addEventListener("click", () => {
 
   showFoodItems(restaurant, "restaurant");
   showsearch(restaurantNames, restaurant, "restaurant");
-});
+}
 //for delivery
+
+document.querySelector("#deliveryMenu").addEventListener("click", () => {
+  deliveryFooterAndTastetripFunction();
+});
+
+document
+  .querySelector("#deliveryFooterAndMenu")
+  .addEventListener("click", () => {
+    deliveryFooterAndTastetripFunction();
+  });
+
 delivery.addEventListener("click", () => {
+  deliveryFooterAndTastetripFunction();
+});
+
+function deliveryFooterAndTastetripFunction() {
   filtersMainOptionDiv.innerHTML = " ";
   filtertext.textContent = "";
   filtertext.textContent = "Find Your Perfect Meal";
@@ -57,7 +91,8 @@ delivery.addEventListener("click", () => {
 
   showFoodItems(deliveryItems, "delivery");
   showsearch(foodNames, deliveryItems, "delivery");
-});
+}
+
 function filterOption(val1, val2, val3) {
   filtersMainOptionDiv.appendChild(resetFilterBtn);
   val1.forEach((selectId) => {

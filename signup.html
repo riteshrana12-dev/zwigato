@@ -11,7 +11,7 @@
     <div class="gradient-border-wrapper">
       <div class="signup-container">
         <h2>Zwigato Signup</h2>
-        <form action="/signup" method="POST">
+        <form id="signupForm">
           <input type="text" name="name" placeholder="Full Name" required />
           <input type="email" name="email" placeholder="Email" required />
           <input
@@ -22,11 +22,56 @@
           />
           <button type="submit">Sign Up</button>
         </form>
+
         <div class="link">
-          <a href="login.html">Already have an account? Login</a>
+          <a href="index.html">Already have an account? Login</a>
         </div>
       </div>
     </div>
-    <script src="auth.js" defer></script>
+    <script src="toggle.js"></script>
+    <script type="module">
+      import { auth } from "./firebase-init.js";
+      import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+      import {
+        createUserWithEmailAndPassword,
+        updateProfile,
+      } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+      // DOM selectors
+      const form = document.querySelector("#signupForm");
+      const nameInput = document.querySelector('input[name="name"]');
+      const emailInput = document.querySelector('input[name="email"]');
+      const passwordInput = document.querySelector('input[name="password"]');
+
+      // Handle form submission
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        try {
+          const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+
+          // Update display name using modular syntax
+          await updateProfile(user, { displayName: name });
+
+          console.log("User signed up:", user);
+          // alert("Signup successful!");
+          window.location.href = "home.html";
+
+          form.reset();
+        } catch (error) {
+          console.error("Signup error:", error.message);
+          // alert(error.message);
+        }
+      });
+    </script>
   </body>
 </html>

@@ -361,6 +361,7 @@ body.dark-mode .distance {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-top: 33px;
 }
 
 .menuLinks a {
@@ -384,7 +385,7 @@ body.dark-mode .distance {
 }
 
 #toggleThemeBtn {
-  margin-top: 18rem;
+  margin-top: 5rem;
   background-color: transparent;
   border: 1px solid #ff5722;
   padding: 6px 12px;
@@ -443,12 +444,18 @@ body.dark-mode .distance {
 }
 
 /* 🍔 Hamburger Icon */
+
+.hamburger,
+.sideMenu {
+  display: none;
+}
+
 .hamburger {
   cursor: pointer;
-  margin: auto;
   z-index: 100;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.156);
 }
 
 .hamburger > i {
@@ -883,7 +890,7 @@ body.dark-mode .distance {
 }
 .footerLinks {
   display: flex;
-  gap: 3rem;
+  gap: 4rem;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -895,13 +902,16 @@ body.dark-mode .distance {
   border-radius: 4px;
   text-decoration: none;
   transition: color 0.18s, background 0.18s, transform 0.18s;
+  display: inline-block;
+  height: 2rem; /* match the hover font-size */
+  line-height: 2rem;
 }
 .footerLinks a:hover {
   background: var(--accent);
   color: #fff;
   transform: scale(1.08);
   font-family: scaryring;
-  font-size: 2rem;
+  font-size: 1.5rem;
   letter-spacing: 0.5rem;
 }
 .footerCredit {
@@ -910,10 +920,13 @@ body.dark-mode .distance {
 }
 .footerCredit p {
   margin: 0.32rem 0;
+  display: inline-block;
+  will-change: transform;
+  transition: transform 0.3s, color 0.3s;
 }
 .footerCredit p:hover {
   color: var(--accent);
-  transform: scale(1.03);
+  text-shadow: 0 0 4px var(--accent);
 }
 
 /* Overlay Panel */
@@ -1012,6 +1025,7 @@ body.dark-mode .distance {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  color: #333;
 }
 .cartControls {
   flex-direction: row;
