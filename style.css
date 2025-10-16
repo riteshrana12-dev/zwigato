@@ -413,7 +413,7 @@ body.dark-mode .distance {
   align-items: center;
   padding: 0 32px;
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.06);
-  z-index: 10;
+  z-index: 20;
   border-bottom: 1.5px solid #f3e7e7;
 }
 
@@ -452,7 +452,7 @@ body.dark-mode .distance {
 
 .hamburger {
   cursor: pointer;
-  z-index: 100;
+  z-index: 40;
   border-radius: 8px;
   padding: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.156);
@@ -567,7 +567,7 @@ body.dark-mode .distance {
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;
-  z-index: 999;
+  z-index: 10;
   display: none; /* Hidden by default */
   font-family: "Windsol";
 }
@@ -1018,9 +1018,7 @@ body.dark-mode .distance {
   color: #333;
 }
 
-/* Booking and Cart */
-.booking-section,
-.cartControls {
+.booking-section {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -1028,32 +1026,58 @@ body.dark-mode .distance {
   color: #333;
 }
 .cartControls {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  /* color: #333; */
+}
+
+.cartControls {
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
 }
+
 .cartControls button,
 .book-table-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.6rem 1rem;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 2rem;
+  font-weight: bolder;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
 }
+
 .book-table-btn {
   background-color: #3498db;
   color: white;
 }
+
 .cartControls button {
-  background-color: #2ecc71;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
   color: white;
 }
+
 #cartCount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
   background-color: #ecf0f1;
+  color: black;
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
+  font-size: 1rem;
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* Slider Frame */
@@ -1134,7 +1158,7 @@ body.dark-mode .distance {
 
 .food-image {
   width: 100%;
-  height: 40%;
+  height: 45%;
 }
 /* Food Image */
 #detailImgdeli {
@@ -1149,7 +1173,7 @@ body.dark-mode .distance {
 /* Info Section */
 .item-info-deli {
   width: 100%;
-  height: 60%;
+  height: 55%;
   margin-top: 1.5rem;
   text-align: center;
 }
@@ -1170,8 +1194,7 @@ body.dark-mode .distance {
 }
 
 /* Cart Controls */
-.cartControls {
-  margin-top: 1.5rem;
+/* .cartControls {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -1200,4 +1223,5 @@ body.dark-mode .distance {
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
   font-size: 1rem;
-}
+  text-align: center;
+} */

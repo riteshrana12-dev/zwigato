@@ -352,7 +352,12 @@ function showFoodItems(dataArray, type) {
 
       if (type === "delivery") {
         html = `
-        <div class="deliveryDetail" data-aos="fade-up" data-index="${index}">
+        <div class="deliveryDetail" data-aos="fade-up" data-index="${index}"
+        data-id="${item.id}" 
+       data-name="${item.name}" 
+       data-price="${item.price}" 
+       data-image="assets/${item.image}.png">
+
           <div class="deliveryImg">
             <img src="assets/${item.image}.png" alt="${item.name}" />
           </div>
@@ -367,7 +372,13 @@ function showFoodItems(dataArray, type) {
             <div class="deliveryAllDetail">
               <p class="time">⏱️ ${item.prep_time} min</p>
             </div>
-            
+             <div class="cartControls">
+        <button class="minusBtn">–</button>
+        <span class="cartCount">0</span>
+        <button class="plusBtn">+</button>
+        <button class="addCartBtn">Add to Cart</button>
+      </div>
+
           </div>
         </div>`;
         deliverySection.innerHTML += html;
@@ -375,6 +386,7 @@ function showFoodItems(dataArray, type) {
 
       delay += 100;
     });
+    // cartFunction();
     allCardsRestaurantAndDelivery(dataArray, type);
 
     try {
@@ -415,51 +427,24 @@ function allCardsRestaurantAndDelivery(dataArray, type) {
 }
 const detailPanel = document.getElementById("detailPanel");
 function detailShow(allCards, dataArray, type, menu) {
-  allCards.forEach((card) => {
-    card.addEventListener("click", () => {
-      detailPanel.innerHTML = ""; // Clear previous content
+  allCards.forEach((card, index) => {
+    if (type === "delivery") {
+      const image = card.querySelector(".deliveryImg");
+      const name = card.querySelector(".name");
 
-      let foodTypesHTML = "";
-      let alcoholHTML = "";
+      if (image) {
+        image.addEventListener("click", () => {
+          openDeliveryDetail(index);
+        });
+      }
 
-      if (type === "delivery") {
-        const deliveryIndex = card.getAttribute("data-index");
-        const itemData = dataArray[deliveryIndex];
-
-        detailPanel.innerHTML = `
-          <div class="detail-deli vertical-layout">
-            <span id="closeDetail" class="close-btn">×</span>
-
-            <!-- Top: Food Image -->
-            <div class="food-image">
-              <img id="detailImgdeli" src="./assets/${
-                itemData.image
-              }.png" alt="${itemData.name}" />
-            </div>
-
-            <!-- Middle: Item Info -->
-            <div class="item-info-deli">
-              <h2>${itemData.name}</h2>
-              <p><strong>Category:</strong> ${itemData.category}</p>
-              <p><strong>Cuisine:</strong> ${itemData.cuisine_type}</p>
-              <p><strong>Price:</strong> ₹${itemData.price}</p>
-              <p><strong>Veg:</strong> ${itemData.is_veg ? "Yes" : "No"}</p>
-              <p><strong>Rating:</strong> ★ ${itemData.rating}</p>
-              <p><strong>Prep Time:</strong> ⏱️ ${itemData.prep_time} mins</p>
-            </div>
-
-            <!-- Bottom: Cart Controls -->
-            <div class="cartControls">
-              <button id="minusBtn">–</button>
-              <span id="cartCount">0</span>
-              <button id="plusBtn">+</button>
-              <button id="addCartBtn">Add to Cart</button>
-            </div>
-          </div>
-        `;
-
-        detailPanel.style.display = "flex";
-      } else {
+      if (name) {
+        name.addEventListener("click", () => {
+          openDeliveryDetail(index);
+        });
+      }
+    } else {
+      card.addEventListener("click", () => {
         const restaurantIndex = card.getAttribute("data-index");
         const itemData = dataArray[restaurantIndex];
         const rating =
@@ -471,6 +456,9 @@ function detailShow(allCards, dataArray, type, menu) {
 
         const minDate = today.toISOString().split("T")[0];
         const maxDate = nextWeek.toISOString().split("T")[0];
+
+        let foodTypesHTML = "";
+        let alcoholHTML = "";
 
         if (itemData.food_type) {
           foodTypesHTML = `<p><strong>Food Types:</strong> ${itemData.food_type.join(
@@ -521,7 +509,6 @@ function detailShow(allCards, dataArray, type, menu) {
 
         detailPanel.style.display = "flex";
 
-        // ✅ Now attach slider logic AFTER HTML is injected
         const sliderImage = document.getElementById("sliderImage");
         const prevBtn = document.getElementById("prevBtn");
         const nextBtn = document.getElementById("nextBtn");
@@ -559,13 +546,46 @@ function detailShow(allCards, dataArray, type, menu) {
           updateSliderImage();
           updateButtonStates();
         }
-      }
 
-      // Close button
-      attachCloseListener();
-      cartFunction();
-    });
+        attachCloseListener();
+      });
+    }
   });
+
+  function openDeliveryDetail(index) {
+    const itemData = dataArray[index];
+
+    detailPanel.innerHTML = `
+      <div class="detail-deli vertical-layout"
+           data-id="${itemData.id}"
+           data-name="${itemData.name}"
+           data-price="${itemData.price}"
+           data-image="./assets/${itemData.image}.png">
+           
+        <span id="closeDetail" class="close-btn">×</span>
+
+        <div class="food-image">
+          <img id="detailImgdeli" src="./assets/${itemData.image}.png" alt="${
+      itemData.name
+    }" />
+        </div>
+
+        <div class="item-info-deli">
+          <h2>${itemData.name}</h2>
+          <p><strong>Category:</strong> ${itemData.category}</p>
+          <p><strong>Cuisine:</strong> ${itemData.cuisine_type}</p>
+          <p><strong>Price:</strong> ₹${itemData.price}</p>
+          <p><strong>Veg:</strong> ${itemData.is_veg ? "Yes" : "No"}</p>
+          <p><strong>Rating:</strong> ★ ${itemData.rating}</p>
+          <p><strong>Prep Time:</strong> ⏱️ ${itemData.prep_time} mins</p>
+        </div>
+      </div>
+    `;
+
+    detailPanel.style.display = "flex";
+
+    attachCloseListener();
+  }
 }
 
 // search bar functionality
@@ -694,7 +714,7 @@ function filterDetailShow(getDataArray, type) {
     </div>
   `;
     detailPanel.style.display = "flex";
-
+    // cartFunction();
     attachCloseListener();
   } else {
     const getData = getDataArray; //  extracting the  first match
@@ -719,23 +739,23 @@ function attachCloseListener() {
   }
 }
 
-// Cart controls
-function cartFunction() {
-  const plusBtn = document.getElementById("plusBtn");
-  const minusBtn = document.getElementById("minusBtn");
-  const cartCount = document.getElementById("cartCount");
+// // Cart controls
+// function cartFunction() {
+//   const plusBtn = document.getElementById("plusBtn");
+//   const minusBtn = document.getElementById("minusBtn");
+//   const cartCount = document.getElementById("cartCount");
 
-  if (plusBtn && minusBtn && cartCount) {
-    plusBtn.addEventListener("click", () => {
-      cartCount.textContent = parseInt(cartCount.textContent) + 1;
-    });
+//   if (plusBtn && minusBtn && cartCount) {
+//     plusBtn.addEventListener("click", () => {
+//       cartCount.textContent = parseInt(cartCount.textContent) + 1;
+//     });
 
-    minusBtn.addEventListener("click", () => {
-      const current = parseInt(cartCount.textContent);
-      if (current > 0) cartCount.textContent = current - 1;
-    });
-  }
-}
+//     minusBtn.addEventListener("click", () => {
+//       const current = parseInt(cartCount.textContent);
+//       if (current > 0) cartCount.textContent = current - 1;
+//     });
+//   }
+// }
 
 document.addEventListener("DOMContentLoaded", () => {
   const hamburgerBtn = document.getElementById("hamburgerBtn");
@@ -783,4 +803,51 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleThemeBtn.addEventListener("click", toggleTheme);
 
   applyInitialTheme();
+});
+
+document.body.addEventListener("click", async (e) => {
+  const card = e.target.closest(".deliveryDetail, .detail-deli");
+  if (!card) return;
+
+  const countSpan =
+    card.querySelector(".cartCount") || card.querySelector("#cartCount");
+
+  // ➕ Plus
+  if (e.target.classList.contains("plusBtn") || e.target.id === "plusBtn") {
+    if (countSpan) {
+      countSpan.textContent = parseInt(countSpan.textContent) + 1;
+    }
+    return;
+  }
+
+  // ➖ Minus
+  if (e.target.classList.contains("minusBtn") || e.target.id === "minusBtn") {
+    if (countSpan) {
+      const current = parseInt(countSpan.textContent);
+      if (current > 0) countSpan.textContent = current - 1;
+    }
+    return;
+  }
+
+  // 🛒 Add to Cart
+  if (
+    e.target.classList.contains("addCartBtn") ||
+    e.target.id === "addCartBtn"
+  ) {
+    if (!countSpan) return;
+    const quantity = parseInt(countSpan.textContent);
+    if (quantity === 0)
+      return showError("Please select quantity before adding.");
+
+    const item = {
+      id: card.dataset.id,
+      name: card.dataset.name,
+      price: parseInt(card.dataset.price),
+      quantity: quantity,
+      imageUrl: card.dataset.image,
+    };
+
+    await addToCart(item);
+    return;
+  }
 });
