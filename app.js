@@ -705,7 +705,7 @@ function filterDetailShow(getDataArray, type) {
         <p><strong>Prep Time:</strong> ⏱️ ${getData.prep_time} mins</p>
       </div>
 
-      
+     
     </div>
   `;
     detailPanel.style.display = "flex";
@@ -734,23 +734,23 @@ function attachCloseListener() {
   }
 }
 
-// // Cart controls
-// function cartFunction() {
-//   const plusBtn = document.getElementById("plusBtn");
-//   const minusBtn = document.getElementById("minusBtn");
-//   const cartCount = document.getElementById("cartCount");
+// Cart controls
+function cartFunction() {
+  const plusBtn = document.getElementById("plusBtn");
+  const minusBtn = document.getElementById("minusBtn");
+  const cartCount = document.getElementById("cartCount");
 
-//   if (plusBtn && minusBtn && cartCount) {
-//     plusBtn.addEventListener("click", () => {
-//       cartCount.textContent = parseInt(cartCount.textContent) + 1;
-//     });
+  if (plusBtn && minusBtn && cartCount) {
+    plusBtn.addEventListener("click", () => {
+      cartCount.textContent = parseInt(cartCount.textContent) + 1;
+    });
 
-//     minusBtn.addEventListener("click", () => {
-//       const current = parseInt(cartCount.textContent);
-//       if (current > 0) cartCount.textContent = current - 1;
-//     });
-//   }
-// }
+    minusBtn.addEventListener("click", () => {
+      const current = parseInt(cartCount.textContent);
+      if (current > 0) cartCount.textContent = current - 1;
+    });
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const hamburgerBtn = document.getElementById("hamburgerBtn");
@@ -800,49 +800,49 @@ document.addEventListener("DOMContentLoaded", () => {
   applyInitialTheme();
 });
 
-document.body.addEventListener("click", async (e) => {
-  const card = e.target.closest(".deliveryDetail, .detail-deli");
-  if (!card) return;
+// document.body.addEventListener("click", async (e) => {
+//   const card = e.target.closest(".deliveryDetail, .detail-deli");
+//   if (!card) return;
 
-  const countSpan =
-    card.querySelector(".cartCount") || card.querySelector("#cartCount");
+//   const countSpan =
+//     card.querySelector(".cartCount") || card.querySelector("#cartCount");
 
-  // ➕ Plus
-  if (e.target.classList.contains("plusBtn") || e.target.id === "plusBtn") {
-    if (countSpan) {
-      countSpan.textContent = parseInt(countSpan.textContent) + 1;
-    }
-    return;
-  }
+//   // ➕ Plus
+//   if (e.target.classList.contains("plusBtn") || e.target.id === "plusBtn") {
+//     if (countSpan) {
+//       countSpan.textContent = parseInt(countSpan.textContent) + 1;
+//     }
+//     return;
+//   }
 
-  // ➖ Minus
-  if (e.target.classList.contains("minusBtn") || e.target.id === "minusBtn") {
-    if (countSpan) {
-      const current = parseInt(countSpan.textContent);
-      if (current > 0) countSpan.textContent = current - 1;
-    }
-    return;
-  }
+//   // ➖ Minus
+//   if (e.target.classList.contains("minusBtn") || e.target.id === "minusBtn") {
+//     if (countSpan) {
+//       const current = parseInt(countSpan.textContent);
+//       if (current > 0) countSpan.textContent = current - 1;
+//     }
+//     return;
+//   }
 
-  // 🛒 Add to Cart
-  if (
-    e.target.classList.contains("addCartBtn") ||
-    e.target.id === "addCartBtn"
-  ) {
-    if (!countSpan) return;
-    const quantity = parseInt(countSpan.textContent);
-    if (quantity === 0)
-      return showError("Please select quantity before adding.");
+//   // 🛒 Add to Cart
+//   // if (
+//   //   e.target.classList.contains("addCartBtn") ||
+//   //   e.target.id === "addCartBtn"
+//   // ) {
+//   //   if (!countSpan) return;
+//   //   const quantity = parseInt(countSpan.textContent);
+//   //   if (quantity === 0)
+//   //     return showError("Please select quantity before adding.");
 
-    const item = {
-      id: card.dataset.id,
-      name: card.dataset.name,
-      price: parseInt(card.dataset.price),
-      quantity: quantity,
-      imageUrl: card.dataset.image,
-    };
+//   //   const item = {
+//   //     id: card.dataset.id,
+//   //     name: card.dataset.name,
+//   //     price: parseInt(card.dataset.price),
+//   //     quantity: quantity,
+//   //     imageUrl: card.dataset.image,
+//   //   };
 
-    await addToCart(item);
-    return;
-  }
-});
+//   //   await addToCart(item);
+//   //   return;
+//   // }
+// });
