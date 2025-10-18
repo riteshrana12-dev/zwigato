@@ -1,0 +1,38 @@
+<html lang="en">
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
+</div>
+<button id="bookBtn">Book Table</button>
+
+
+<div id="confirmation" class="confirm" style="display:none"></div>
+
+
+<script>
+function qs(u){ try{ return new URLSearchParams(u||location.search); }catch(e){ return new URLSearchParams(location.search); } }
+const params = qs();
+const restaurantId = params.get('restaurantId') || params.get('id') || 'unknown';
+const restaurantNameEl = document.getElementById('restaurantName');
+// If your repo exposes restaurants.json, try to read from it — but for prototype we'll show id
+restaurantNameEl.textContent = 'Restaurant: ' + restaurantId;
+
+
+function readBookings(){ try{ return JSON.parse(localStorage.getItem('zwigato_bookings')||'[]'); }catch(e){ return []; } }
+function writeBookings(b){ localStorage.setItem('zwigato_bookings', JSON.stringify(b)); }
+
+
+document.getElementById('bookBtn').addEventListener('click', ()=>{
+const date = document.getElementById('date').value;
+const time = document.getElementById('time').value;
+const guests = Number(document.getElementById('guests').value);
+if(!date || !time){ alert('Please pick date and time'); return; }
+const booking = { id: 'BKG'+Date.now(), restaurantId, date, time, guests, createdAt: new Date().toISOString() };
+const bookings = readBookings(); bookings.push(booking); writeBookings(bookings);
+document.getElementById('confirmation').style.display='block';
+document.getElementById('confirmation').innerHTML = `<strong>Booking Confirmed</strong><div>ID: ${booking.id}</div><div>Date: ${date} ${time}</div><div>Guests: ${guests}</div>`;
+});
+</script>
+</body>
+</html>

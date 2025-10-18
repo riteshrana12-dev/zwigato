@@ -705,12 +705,7 @@ function filterDetailShow(getDataArray, type) {
         <p><strong>Prep Time:</strong> ⏱️ ${getData.prep_time} mins</p>
       </div>
 
-      <div class="cartControls">
-        <button id="minusBtn">–</button>
-        <span id="cartCount">0</span>
-        <button id="plusBtn">+</button>
-        <button id="addCartBtn">Add to Cart</button>
-      </div>
+      
     </div>
   `;
     detailPanel.style.display = "flex";

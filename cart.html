@@ -1,0 +1,202 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Zwigato — Cart</title>
+    <style>
+      body {
+        font-family: system-ui, Arial;
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin-bottom: 12px;
+      }
+      .cartItem {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+      }
+      .cartItem img {
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+      .qty {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .qty button {
+        padding: 6px 10px;
+      }
+      .summary {
+        margin-top: 18px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #fafafa;
+      }
+      .empty {
+        padding: 40px;
+        text-align: center;
+        color: #666;
+      }
+      .orderBtn {
+        margin-top: 12px;
+        padding: 10px 14px;
+        border: 0;
+        background: #ff3b30;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Your Cart — Delivery</h1>
+    <div id="cartList"></div>
+    <div id="empty" class="empty" style="display: none">
+      Your cart is empty. Go add something tasty 🍕
+    </div>
+
+    <div id="summary" class="summary" style="display: none">
+      <div>Total items: <span id="totalItems">0</span></div>
+      <div>Total price: ₹ <span id="totalPrice">0.00</span></div>
+      <button id="placeOrder" class="orderBtn">Place Order</button>
+    </div>
+
+    <script>
+      /* cart.js inline (for single-file convenience) */
+      function readCart() {
+        try {
+          return JSON.parse(localStorage.getItem("zwigato_cart") || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function writeCart(c) {
+        localStorage.setItem("zwigato_cart", JSON.stringify(c));
+      }
+
+      function renderCart() {
+        const cart = readCart();
+        const list = document.getElementById("cartList");
+        const empty = document.getElementById("empty");
+        const summary = document.getElementById("summary");
+        const totalItemsEl = document.getElementById("totalItems");
+        const totalPriceEl = document.getElementById("totalPrice");
+        list.innerHTML = "";
+        if (cart.length === 0) {
+          empty.style.display = "block";
+          summary.style.display = "none";
+          return;
+        }
+        empty.style.display = "none";
+        summary.style.display = "block";
+
+        let totalItems = 0,
+          totalPrice = 0;
+        cart.forEach((it, idx) => {
+          totalItems += it.qty;
+          totalPrice += it.qty * (Number(it.price) || 0);
+          const el = document.createElement("div");
+          el.className = "cartItem";
+          el.innerHTML =
+            `
+<img src="${it.img || "https://via.placeholder.com/80"}" alt="` +
+            escapeHtml(it.name) +
+            `" />
+<div style="flex:1">
+<div style="font-weight:600">${escapeHtml(it.name)}</div>
+<div>₹ ${Number(it.price).toFixed(2)}</div>
+</div>
+<div class="qty">
+<button onclick="decrease(${idx})">-</button>
+<div id="qty-${idx}">${it.qty}</div>
+<button onclick="increase(${idx})">+</button>
+</div>
+<div style="margin-left:12px">₹ ${(it.qty * Number(it.price)).toFixed(2)}</div>
+`;
+          list.appendChild(el);
+        });
+        totalItemsEl.textContent = totalItems;
+        totalPriceEl.textContent = totalPrice.toFixed(2);
+      }
+
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>\"']/g, function (c) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[c];
+        });
+      }
+
+      function increase(idx) {
+        const cart = readCart();
+        cart[idx].qty = (cart[idx].qty || 0) + 1;
+        writeCart(cart);
+        renderCart();
+      }
+      function decrease(idx) {
+        const cart = readCart();
+        cart[idx].qty = (cart[idx].qty || 0) - 1;
+        if (cart[idx].qty <= 0) cart.splice(idx, 1);
+        writeCart(cart);
+        renderCart();
+      }
+
+      function clearCart() {
+        localStorage.removeItem("zwigato_cart");
+        renderCart();
+      }
+
+      // Called by other pages to add an item
+      function addToCartFromPage(item) {
+        // item: {id, name, price, img}
+        const cart = readCart();
+        const existing = cart.find((c) => c.id === item.id);
+        if (existing) {
+          existing.qty = (existing.qty || 0) + 1;
+        } else {
+          item.qty = 1;
+          cart.push(item);
+        }
+        writeCart(cart);
+        // optional: show a toast or redirect to cart page
+        alert(item.name + " added to cart");
+      }
+
+      // Place order behaviour — for prototype just clear cart and show message
+      document.getElementById("placeOrder").addEventListener("click", () => {
+        const cart = readCart();
+        if (cart.length === 0) {
+          alert("Cart empty");
+          return;
+        }
+        // simulated order placement
+        const order = {
+          id: "ORD" + Date.now(),
+          items: cart,
+          total: cart.reduce((s, i) => s + i.qty * i.price, 0),
+          placedAt: new Date().toISOString(),
+        };
+        // save last order (simple prototyping)
+        localStorage.setItem("zwigato_last_order", JSON.stringify(order));
+        clearCart();
+        alert("Order placed — " + order.id);
+        // optional: redirect to order summary page
+      });
+
+      // initialize
+      renderCart();
+    </script>
+  </body>
+</html>
