@@ -1,0 +1,231 @@
+/* Base styles */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f6f8;
+  color: #333;
+}
+
+.history-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.history-header {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.history-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  background: linear-gradient(to right, #ff5722, #ff9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.history-header p {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.history-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border: none;
+  background: #eee;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+  font-size: 0.95rem;
+}
+
+.tab-btn:hover {
+  background: #ddd;
+}
+
+.active-btn {
+  background: #ff5722;
+  color: white;
+}
+
+.history-content {
+  padding: 10px;
+}
+
+.history-section {
+  display: none;
+}
+
+.history-section.active {
+  display: block;
+}
+
+.history-card {
+  position: relative;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.history-card h4 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #ff5722;
+}
+
+.history-card ul {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.history-card p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #d32f2f;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  color: #b71c1c;
+}
+
+/* 🌞 Light Mode */
+body.light-mode {
+  background: #f4f6f8;
+  color: #333;
+}
+
+/* 🌙 Dark Mode Theme */
+body.dark-mode {
+  background-color: #1e272e;
+  color: #f1f2f6;
+}
+
+body.dark-mode .history-wrapper {
+  background-color: #2d3436;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  border-color: #444;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h4,
+body.dark-mode p,
+body.dark-mode label {
+  color: #f1f2f6;
+}
+
+body.dark-mode .history-card {
+  background-color: #2d3436;
+  border-color: #444;
+  color: #f1f2f6;
+}
+
+body.dark-mode .history-card h4 {
+  color: #feca57;
+}
+
+body.dark-mode .history-card ul li {
+  color: #f1f2f6;
+}
+
+body.dark-mode .tab-btn,
+body.dark-mode .theme-btn {
+  background-color: #ff6b6b;
+  color: #1e272e;
+  border: none;
+}
+
+body.dark-mode .tab-btn:hover,
+body.dark-mode .theme-btn:hover {
+  background-color: #ff4757;
+}
+
+body.dark-mode .active-btn {
+  background-color: #ff6b6b;
+  color: #1e272e;
+}
+
+body.dark-mode .delete-btn {
+  color: #feca57;
+}
+
+body.dark-mode .delete-btn:hover {
+  color: #ff6b6b;
+}
+
+body.dark-mode .link a {
+  color: #feca57;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .history-wrapper {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .tab-btn {
+    flex: 1 1 45%;
+    font-size: 0.9rem;
+  }
+
+  .history-card {
+    padding: 12px 15px;
+  }
+
+  .history-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .history-header p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-btn {
+    flex: 1 1 100%;
+    font-size: 0.85rem;
+  }
+
+  .history-card h4 {
+    font-size: 1rem;
+  }
+
+  .history-card p,
+  .history-card ul li {
+    font-size: 0.85rem;
+  }
+
+  .delete-btn {
+    font-size: 1rem;
+  }
+}

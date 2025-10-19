@@ -1193,35 +1193,19 @@ body.dark-mode .distance {
   color: #333;
 }
 
-/* Cart Controls */
-/* .cartControls {
+.image-loading {
+  background: #eee;
+  min-height: 180px;
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
-}
-.cartControls button {
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  background-color: #2ecc71;
-  color: white;
-  transition: background 0.3s ease, transform 0.2s ease;
+  justify-content: center;
 }
 
-.cartControls button:hover {
-  background-color: #27ae60;
-  transform: scale(1.05);
+.image-loading img {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
 }
 
-#cartCount {
-  font-weight: bold;
-  background-color: #ecf0f1;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  text-align: center;
-} */
+.image-loading img.loaded {
+  opacity: 1;
+}

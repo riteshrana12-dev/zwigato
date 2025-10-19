@@ -1,9 +1,22 @@
-// This script checks for a saved theme in localStorage and applies it on page load.
 document.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem("theme");
+  const body = document.body;
+  const toggleBtn = document.getElementById("themeToggle");
 
-  // If the saved theme is 'dark', add the 'dark-mode' class to the body.
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark-mode");
+  // Apply saved theme on load
+  const savedTheme = localStorage.getItem("theme") || "light";
+  applyTheme(savedTheme);
+
+  // Listen for toggle
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const newTheme = body.classList.contains("dark-mode") ? "light" : "dark";
+      localStorage.setItem("theme", newTheme);
+      applyTheme(newTheme);
+    });
+  }
+
+  function applyTheme(theme) {
+    body.classList.toggle("dark-mode", theme === "dark");
+    body.classList.toggle("light-mode", theme === "light");
   }
 });

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order & Booking History</title>
+    <link rel="stylesheet" href="history.css" />
+  </head>
+  <body>
+    <div class="history-wrapper">
+      <header class="history-header">
+        <h1>🧾 Zwigato History</h1>
+        <p>Track your food orders and table bookings</p>
+      </header>
+
+      <div class="history-tabs">
+        <button id="showFood" class="tab-btn active-btn">🛒 Food Orders</button>
+        <button id="showTable" class="tab-btn">📅 Table Bookings</button>
+      </div>
+
+      <main class="history-content">
+        <section id="foodHistory" class="history-section active"></section>
+        <section id="tableHistory" class="history-section"></section>
+      </main>
+    </div>
+    <script src="toggle.js"></script>
+    <script src="history.js"></script>
+  </body>
+</html>

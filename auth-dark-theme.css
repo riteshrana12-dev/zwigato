@@ -1,21 +1,10 @@
-/* ------------------------------------ */
-/* -- Dark Theme for Login & Signup  -- */
-/* ------------------------------------ */
-
 body.dark-mode {
   background-color: #1e272e;
 }
 
 body.dark-mode .gradient-border-wrapper {
-  /* Change the inner background to a dark color */
   background: linear-gradient(#2d3436, #2d3436) padding-box,
-    conic-gradient(
-        from var(--bg-angle),
-        #ff6b6b,
-        /* Use primary dark theme color */ #feca57,
-        /* Use accent dark theme color */ #48dbfb,
-        #ff6b6b
-      )
+    conic-gradient(from var(--bg-angle), #ff6b6b, #feca57, #48dbfb, #ff6b6b)
       border-box;
 }
 
@@ -26,7 +15,7 @@ body.dark-mode .signup-container {
 }
 
 body.dark-mode h2 {
-  color: #f1f2f6; /* Light text */
+  color: #f1f2f6;
 }
 
 body.dark-mode input {
@@ -40,18 +29,18 @@ body.dark-mode input::placeholder {
 }
 
 body.dark-mode input:focus {
-  border-color: #ff6b6b; /* Use primary dark theme color */
+  border-color: #ff6b6b;
 }
 
 body.dark-mode button {
-  background-color: #ff6b6b; /* Use primary dark theme color */
+  background-color: #ff6b6b;
   color: #1e272e;
 }
 
 body.dark-mode button:hover {
-  background-color: #ff4757; /* Use primary-hover dark theme color */
+  background-color: #ff4757;
 }
 
 body.dark-mode .link a {
-  color: #feca57; /* Use accent dark theme color */
+  color: #feca57;
 }

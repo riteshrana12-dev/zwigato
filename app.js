@@ -10,13 +10,13 @@ filterBtn.textContent = "Apply Filters";
 const resetFilterBtn = document.createElement("button");
 resetFilterBtn.classList.add("resetButton");
 resetFilterBtn.textContent = "Reset Filter";
-const showfood = document.querySelector(".showFood");
+const showFood = document.querySelector(".showFood"); // Fixed: consistent naming
 const restaurantsSection = document.createElement("div");
 restaurantsSection.classList.add("restaurantsSection");
-// showfood.appendChild(restaurantsSection);
+// showFood.appendChild(restaurantsSection);
 const deliverySection = document.createElement("div");
 deliverySection.classList.add("restaurantsSection");
-// showfood.appendChild(deliverySection);
+// showFood.appendChild(deliverySection);
 const optionsAddedMap = {}; // Track which filters have been updated
 const filterSelections = {};
 
@@ -49,10 +49,10 @@ function restaurantFooterAndTastetripFunction() {
   filterOption(filterIdsOfRestaurants, foodTypes, mumbaiLocations);
   restaurantsSection.innerHTML = "";
 
-  if (showfood.contains(deliverySection)) {
-    showfood.removeChild(deliverySection);
+  if (showFood.contains(deliverySection)) {
+    showFood.removeChild(deliverySection);
   }
-  showfood.appendChild(restaurantsSection);
+  showFood.appendChild(restaurantsSection);
 
   showFoodItems(restaurant, "restaurant");
   showsearch(restaurantNames, restaurant, "restaurant");
@@ -84,10 +84,10 @@ function deliveryFooterAndTastetripFunction() {
   filterOption(filterIdsOfDelivery, cuisineTypes, categories);
   deliverySection.innerHTML = "";
 
-  if (showfood.contains(restaurantsSection)) {
-    showfood.removeChild(restaurantsSection);
+  if (showFood.contains(restaurantsSection)) {
+    showFood.removeChild(restaurantsSection);
   }
-  showfood.appendChild(deliverySection);
+  showFood.appendChild(deliverySection);
 
   showFoodItems(deliveryItems, "delivery");
   showsearch(foodNames, deliveryItems, "delivery");
@@ -156,7 +156,7 @@ function filterOption(val1, val2, val3) {
       const id = e.target.id;
       const selectedValue = e.target.value;
       // Clear irrelevant filters when toggling
-      if (showfood.contains(restaurantsSection)) {
+      if (showFood.contains(restaurantsSection)) {
         // If restaurant section is active, remove delivery filters
         Object.keys(filterSelections).forEach((key) => {
           if (key.includes("Deli")) {
@@ -165,7 +165,7 @@ function filterOption(val1, val2, val3) {
         });
       }
 
-      if (showfood.contains(deliverySection)) {
+      if (showFood.contains(deliverySection)) {
         // If delivery section is active, remove restaurant filters
         Object.keys(filterSelections).forEach((key) => {
           if (key.includes("Rest")) {
@@ -183,7 +183,7 @@ function filterOption(val1, val2, val3) {
 
 //filterbtn logic
 filterBtn.addEventListener("click", () => {
-  const activeType = showfood.contains(restaurantsSection)
+  const activeType = showFood.contains(restaurantsSection)
     ? "restaurant"
     : "delivery";
   const sourceData = activeType === "restaurant" ? restaurant : deliveryItems;
@@ -244,7 +244,7 @@ resetFilterBtn.addEventListener("click", () => {
     if (select) select.value = "";
     console.log(filterSelections);
   });
-  const activeType = showfood.contains(restaurantsSection)
+  const activeType = showFood.contains(restaurantsSection)
     ? "restaurant"
     : "delivery";
   const sourceData = activeType === "restaurant" ? restaurant : deliveryItems;
@@ -281,8 +281,6 @@ function populateOptions(selectElement, optionArray) {
   });
 }
 
-const showFood = document.querySelector(".showFood");
-
 function showFoodItems(dataArray, type) {
   showFood.style.display = "block";
   let delay = 0;
@@ -295,14 +293,14 @@ function showFoodItems(dataArray, type) {
   }
   if (!dataArray || dataArray.length === 0) {
     if (type === "restaurant") {
-      detailPanel.innerHTML = `<p style="color: white; font-size: 3rem">Sorry, we couldn’t find any restaurants.
+      detailPanel.innerHTML = `<p style="color: white; font-size: 3rem">Sorry, we couldn't find any restaurants.
 </p>
     <span id="closeDetail" class="close-btn">×</span>
     `;
       detailPanel.style.display = "flex";
       attachCloseListener();
     } else if (type === "delivery") {
-      detailPanel.innerHTML = `<p style="color: white; font-size: 3rem">Sorry, we couldn’t find any item.
+      detailPanel.innerHTML = `<p style="color: white; font-size: 3rem">Sorry, we couldn't find any item.
 </p>
     <span id="closeDetail" class="close-btn">×</span>
     `;
@@ -319,7 +317,9 @@ function showFoodItems(dataArray, type) {
         <div class="restaurantsDetail" data-aos="fade-up"  data-index="${index}">
         
           <div class="restaurantsImg">
-            <img src="assets/${item.image}.jpg" alt="" />
+            <img src="assets/${item.image}.jpg" alt="${
+          item.rest_name
+        }" loading="lazy"/>
           </div>
           <div class="restaurantsDescription">
             <div class="restaurantsAllDetail">
@@ -358,8 +358,9 @@ function showFoodItems(dataArray, type) {
        data-price="${item.price}" 
        data-image="assets/${item.image}.png">
 
+
           <div class="deliveryImg">
-            <img src="assets/${item.image}.png" alt="${item.name}" />
+            <img src="assets/${item.image}.png" alt="${item.name}" loading="lazy"/>
           </div>
           <div class="deliveryDescription">
             <div class="deliveryAllDetail">
@@ -378,6 +379,7 @@ function showFoodItems(dataArray, type) {
         <button class="plusBtn">+</button>
         <button class="addCartBtn">Add to Cart</button>
       </div>
+
 
           </div>
         </div>`;
@@ -450,13 +452,6 @@ function detailShow(allCards, dataArray, type, menu) {
         const rating =
           card.querySelector(".ratings")?.textContent || "No rating";
 
-        const today = new Date();
-        const nextWeek = new Date();
-        nextWeek.setDate(today.getDate() + 7);
-
-        const minDate = today.toISOString().split("T")[0];
-        const maxDate = nextWeek.toISOString().split("T")[0];
-
         let foodTypesHTML = "";
         let alcoholHTML = "";
 
@@ -475,7 +470,7 @@ function detailShow(allCards, dataArray, type, menu) {
             <div class="left-section">
               <span id="closeDetail" class="close-btn">×</span>
               <div>
-                <img id="detailImg" src="./assets/${itemData.image}.jpg" alt="Restaurant Image" />
+                <img id="detailImg" src="./assets/${itemData.image}.jpg" alt="${itemData.rest_name}" loading="lazy" />
               </div>
               <div id="detailInfo">
                 <h2>${itemData.rest_name}</h2>
@@ -489,15 +484,14 @@ function detailShow(allCards, dataArray, type, menu) {
                 <p><strong>Close at: </strong> ${itemData.restaurant_close_time}</p>
               </div>
               <div class="booking-section">
-                <label for="bookingDate"><strong>Select Date:</strong></label>
-                <input type="date" id="bookingDate" min="${minDate}" max="${maxDate}" />
                 <button id="bookTableBtn" class="book-table-btn">📅 Book a Table</button>
               </div>
             </div>
 
+
             <div class="right-section">
               <div class="slider-frame">
-                <img id="sliderImage" src="" alt="Menu Item" />
+                <img id="sliderImage" src="" alt="Menu Img" loading="lazy" />
               </div>
               <div class="slider-controls">
                 <button id="prevBtn">← Prev</button>
@@ -508,6 +502,16 @@ function detailShow(allCards, dataArray, type, menu) {
         `;
 
         detailPanel.style.display = "flex";
+        const bookTableBtn = document.getElementById("bookTableBtn");
+        if (bookTableBtn) {
+          bookTableBtn.addEventListener("click", () => {
+            const restaurantName = itemData.rest_name;
+            const url = `book-table.html?restaurant=${encodeURIComponent(
+              restaurantName
+            )}`;
+            window.open(url, "_blank"); // 🔥 opens in a new tab
+          });
+        }
 
         const sliderImage = document.getElementById("sliderImage");
         const prevBtn = document.getElementById("prevBtn");
@@ -564,11 +568,13 @@ function detailShow(allCards, dataArray, type, menu) {
            
         <span id="closeDetail" class="close-btn">×</span>
 
+
         <div class="food-image">
           <img id="detailImgdeli" src="./assets/${itemData.image}.png" alt="${
       itemData.name
-    }" />
+    }" loading="lazy"/>
         </div>
+
 
         <div class="item-info-deli">
           <h2>${itemData.name}</h2>
@@ -689,11 +695,13 @@ function filterDetailShow(getDataArray, type) {
     <div class="detail-deli vertical-layout">
       <span id="closeDetail" class="close-btn">×</span>
 
+
       <div class="food-image">
         <img id="detailImgdeli" src="./assets/${getData.image}.png" alt="${
       getData.name
-    }" />
+    }" loading="lazy"/>
       </div>
+
 
       <div class="item-info-deli">
         <h2>${getData.name}</h2>
@@ -704,6 +712,7 @@ function filterDetailShow(getDataArray, type) {
         <p><strong>Rating:</strong> ⭐ ${getData.rating}</p>
         <p><strong>Prep Time:</strong> ⏱️ ${getData.prep_time} mins</p>
       </div>
+
 
     </div>
   `;
@@ -733,7 +742,7 @@ function attachCloseListener() {
   }
 }
 
-// Cart controls for each delivery card
+// Cart controls for each delivery card - FIXED: Event listener cleanup
 function cartFunction() {
   const deliveryItems = document.querySelectorAll(".deliveryDetail");
 
@@ -743,55 +752,92 @@ function cartFunction() {
     const cartCount = item.querySelector(".cartCount");
     const addCartBtn = item.querySelector(".addCartBtn");
 
-    let count = 0;
+    // Clone buttons to remove old listeners
+    const newPlusBtn = plusBtn.cloneNode(true);
+    const newMinusBtn = minusBtn.cloneNode(true);
+    const newAddCartBtn = addCartBtn.cloneNode(true);
 
-    // Increment count
-    plusBtn.addEventListener("click", () => {
+    plusBtn.replaceWith(newPlusBtn);
+    minusBtn.replaceWith(newMinusBtn);
+    addCartBtn.replaceWith(newAddCartBtn);
+
+    // Initialize count from dataset or default to 0
+    let count = parseInt(item.dataset.count || "0");
+    cartCount.textContent = count;
+
+    // ✅ Sync count on every click
+    newPlusBtn.addEventListener("click", () => {
+      count = parseInt(item.dataset.count || "0"); // re-sync before increment
       count++;
+      item.dataset.count = count;
       cartCount.textContent = count;
     });
 
-    // Decrement count
-    minusBtn.addEventListener("click", () => {
+    newMinusBtn.addEventListener("click", () => {
+      count = parseInt(item.dataset.count || "0"); // re-sync before decrement
       if (count > 0) {
         count--;
+        item.dataset.count = count;
         cartCount.textContent = count;
       }
     });
 
-    // Add to Cart button click
-    addCartBtn.addEventListener("click", () => {
+    newAddCartBtn.addEventListener("click", (e) => {
+      const card = e.target.closest(".deliveryDetail");
+      const cartCount = card.querySelector(".cartCount");
+      const count = parseInt(cartCount.textContent.trim()) || 0;
+
       if (count > 0) {
         const foodItem = {
-          id: item.dataset.id,
-          name: item.dataset.name,
-          price: item.dataset.price,
-          image: item.dataset.image,
+          id: card.dataset.id,
+          name: card.dataset.name,
+          price: parseFloat(card.dataset.price),
+          image: card.dataset.image,
           quantity: count,
+          totalPrice: parseFloat(card.dataset.price) * count,
         };
 
-        // Get existing cart from localStorage
         let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-        // Check if already exists
-        const existingItem = cart.find((i) => i.id === foodItem.id);
+        // ✅ Check by ID and name to avoid false matches
+        const existingItem = cart.find(
+          (i) => i.id === foodItem.id && i.name === foodItem.name
+        );
+
         if (existingItem) {
           existingItem.quantity += count;
+          existingItem.totalPrice += foodItem.totalPrice;
         } else {
           cart.push(foodItem);
         }
 
         localStorage.setItem("cartItems", JSON.stringify(cart));
-        alert(`${count} × ${foodItem.name} added to cart! 🛒`);
+        showToast("Item added to cart!");
 
         // Reset count
-        count = 0;
+        card.dataset.count = "0";
         cartCount.textContent = "0";
       } else {
         alert("Please add at least 1 item before adding to cart!");
       }
     });
   });
+}
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    top: 100px;
+    right: 40px;
+    background: #333;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 5px;
+    z-index: 29;
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -840,4 +886,10 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleThemeBtn.addEventListener("click", toggleTheme);
 
   applyInitialTheme();
+});
+
+document.querySelectorAll("img").forEach((img) => {
+  img.addEventListener("load", () => {
+    img.classList.add("loaded");
+  });
 });

@@ -1,0 +1,159 @@
+/* Base styles */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f6f8;
+  color: #333;
+}
+
+.booking-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.booking-container h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  background: linear-gradient(to right, #ff5722, #ff9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+input,
+select {
+  padding: 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fefefe;
+  transition: border 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #ff5722;
+  outline: none;
+}
+
+button[type="submit"] {
+  padding: 12px;
+  font-size: 1rem;
+  background: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #e64a19;
+}
+
+.token-output {
+  margin-top: 25px;
+  padding: 15px;
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* 🌞 Light Mode */
+body.light-mode {
+  background: #f4f6f8;
+  color: #333;
+}
+
+/* 🌙 Dark Mode Theme */
+body.dark-mode {
+  background-color: #1e272e;
+  color: #f1f2f6;
+}
+
+body.dark-mode .booking-container {
+  background-color: #2d3436;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  border-color: #444;
+}
+
+body.dark-mode h2,
+body.dark-mode label,
+body.dark-mode p {
+  color: #f1f2f6;
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background-color: #3d3d3d;
+  border-color: #5a5a5a;
+  color: #f1f2f6;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode select::placeholder {
+  color: #a4a4a4;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus {
+  border-color: #ff6b6b;
+}
+
+body.dark-mode button[type="submit"],
+body.dark-mode .theme-btn {
+  background-color: #ff6b6b;
+  color: #1e272e;
+  border: none;
+}
+
+body.dark-mode button[type="submit"]:hover,
+body.dark-mode .theme-btn:hover {
+  background-color: #ff4757;
+}
+
+body.dark-mode .token-output {
+  background-color: #2d3436;
+  border-left: 4px solid #feca57;
+  color: #f1f2f6;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .booking-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .booking-container h2 {
+    font-size: 22px;
+  }
+
+  input,
+  select,
+  button[type="submit"] {
+    font-size: 0.9rem;
+  }
+
+  .token-output {
+    font-size: 0.9rem;
+  }
+}
