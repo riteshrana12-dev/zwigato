@@ -789,6 +789,21 @@ body.dark-mode .distance {
   letter-spacing: 2px;
   font-family: scaryring;
 }
+
+.heart-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-image: url("https://cdn-icons-png.flaticon.com/512/1077/1077035.png"); /* outline heart */
+  background-size: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.heart-icon.active {
+  background-image: url("https://cdn-icons-png.flaticon.com/512/833/833472.png"); /* filled red heart */
+  transform: scale(1.2);
+}
 .ratings {
   font-size: 0.89rem;
   font-weight: 600;
@@ -906,7 +921,27 @@ body.dark-mode .distance {
   height: 2rem; /* match the hover font-size */
   line-height: 2rem;
 }
+.footerLinks > .aboutAndContact {
+  color: #bcbcbc;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: color 0.18s, background 0.18s, transform 0.18s;
+  display: inline-block;
+  height: 2rem; /* match the hover font-size */
+  line-height: 2rem;
+}
 .footerLinks a:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.08);
+  font-family: scaryring;
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+}
+.footerLinks > .aboutAndContact:hover {
   background: var(--accent);
   color: #fff;
   transform: scale(1.08);
@@ -929,6 +964,102 @@ body.dark-mode .distance {
   text-shadow: 0 0 4px var(--accent);
 }
 
+.aboutPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.aboutContent {
+  background-color: rgba(30, 30, 30, 0.9); /* dark translucent for dark mode */
+  color: #f0f0f0;
+  padding: 28px 32px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  animation: slideDownAbout 0.5s ease;
+  font-size: 1rem;
+  line-height: 1.6;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideDownAbout {
+  from {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.aboutContent ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.aboutContent ul li {
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+}
+
+.aboutContent button {
+  margin-top: 20px;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.aboutContent button:hover {
+  background-color: var(--accent-color);
+  color: white;
+  transform: scale(1.05);
+}
+
+#contactLinks {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#contactLinks a {
+  display: inline-block;
+  margin: 6px 8px;
+  padding: 8px 14px;
+  background-color: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+#contactLinks a:hover {
+  background-color: var(--accent-color);
+  color: white;
+  transform: scale(1.05);
+}
 /* Overlay Panel */
 #detailPanel {
   position: fixed;
@@ -1023,6 +1154,8 @@ body.dark-mode .distance {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
   color: #333;
 }
 .cartControls {

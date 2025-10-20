@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zwigato Login</title>
+    <link rel="stylesheet" href="auth-style.css" />
+    <link rel="stylesheet" href="auth-dark-theme.css" />
+  </head>
+  <body>
+    <div class="gradient-border-wrapper">
+      <div class="login-container">
+        <h2>Zwigato Login</h2>
+        <form id="loginForm">
+          <input type="email" name="email" placeholder="Email" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+        <div class="error-message" style="display: none"></div>
+
+        <div class="link">
+          <a href="signup.html">Don't have an account? Sign up</a>
+        </div>
+      </div>
+    </div>
+    <script src="toggle.js" defer></script>
+    <script type="module">
+      import { auth } from "./firebase-init.js";
+      import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+      const form = document.querySelector("#loginForm");
+      const emailInput = document.querySelector('input[name="email"]');
+      const passwordInput = document.querySelector('input[name="password"]');
+      const errorMessageDiv = document.querySelector(".error-message");
+
+      function showError(message) {
+        errorMessageDiv.textContent = message;
+        errorMessageDiv.classList.add("show");
+        errorMessageDiv.style.display = "block";
+      }
+
+      function clearError() {
+        errorMessageDiv.textContent = "";
+        errorMessageDiv.style.display = "none";
+        errorMessageDiv.classList.remove("show");
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        clearError();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+          // ✅ Redirect back to previous page or index
+          const redirectURL =
+            localStorage.getItem("redirectAfterLogin") || "index.html";
+          localStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirectURL;
+        } catch (error) {
+          if (error.code === "auth/user-not-found") {
+            showError("No account found. Please sign up first.");
+          } else if (error.code === "auth/wrong-password") {
+            showError("Incorrect password. Try again.");
+          } else if (error.code === "auth/invalid-credential") {
+            showError(
+              "Invalid credentials. Please check your email and password."
+            );
+          } else {
+            showError(error.message);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,86 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>Zwigato-Meal Matcher</title>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zwigato Login</title>
-    <link rel="stylesheet" href="auth-style.css" />
-    <link rel="stylesheet" href="auth-dark-theme.css" />
-  </head>
-  <body>
-    <div class="gradient-border-wrapper">
-      <div class="login-container">
-        <h2>Zwigato Login</h2>
-        <form id="loginForm">
-          <input type="email" name="email" placeholder="Email" required />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-          <button type="submit">Login</button>
-        </form>
-        <div class="error-message" style="display: none"></div>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-        <div class="link">
-          <a href="signup.html">Don't have an account? Sign up</a>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="media.css" />
+    <link rel="stylesheet" href="animation.css" />
+  </head>
+  <body style="display: none">
+    <div class="video_section">
+      <video autoplay muted loop playsinline class="video-bg">
+        <source src="./assets/restraunt_video2.mp4" type="video/mp4" />
+      </video>
+      <div class="video-overlay"></div>
+
+      <img class="logo" src="./assets/logo.png" alt="" />
+
+      <div class="hero-container">
+        <h1 class="hero-text">If You’re Hungry, Scroll Down</h1>
+        <div class="scroll-down">
+          <span></span>
         </div>
       </div>
     </div>
-    <script src="toggle.js" defer></script>
+
+    <!-- 🌗 Slide-in Menu Overlay -->
+    <div class="menuOverlay" id="menuOverlay"></div>
+    <aside class="sideMenu" id="sideMenu">
+      <!-- 🔙 Close Arrow -->
+      <button class="closeMenu" id="closeMenuBtn">&#8594;</button>
+
+      <!-- 👤 Profile -->
+      <div class="profileSection">
+        <img src="./assets/profile.jpg" alt="Profile" class="profilePic" />
+        <h3></h3>
+        <p>Food Explorer</p>
+      </div>
+
+      <!-- 📋 Navigation Links -->
+      <nav class="menuLinks">
+        <a href="#"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#filterRestaurants" id="restaurantMenu"
+          ><i class="fa-solid fa-utensils"></i> Restaurants</a
+        >
+        <a href="#filterRestaurants" id="deliveryMenu"
+          ><i class="fa-solid fa-motorcycle"></i> Delivery</a
+        >
+        <a href="cart.html" target="_blank"
+          ><i class="fa-solid fa-bowl-food"></i>Food Cart</a
+        >
+        <a href="history.html" target="_blank"
+          ><i class="fa-solid fa-clock-rotate-left"></i>Cart & Table</a
+        >
+        <a href="#favorites"><i class="fa-solid fa-star"></i> Favorites</a>
+        <a href="index.html"
+          ><i class="fa-solid fa-right-from-bracket"></i> Log Out</a
+        >
+      </nav>
+
+      <!-- 🌗 Theme Toggle -->
+      <div class="themeToggle">
+        <button id="toggleThemeBtn">
+          <i class="fa-solid fa-sun"></i> Light /
+          <i class="fa-solid fa-moon"></i> Dark
+        </button>
+      </div>
+    </aside>
+    <nav class="navbar">
+      <div class="navbar_logo">
+        <img src="./assets/logo_nav.png" alt="" />
+      </div>
+      <div class="newUser">
+        <div class="login">
+          <a href="login.html">Log in</a>
+        </div>
+        <!-- <div class="signUp">
+          <a href="signup.html">Sign up</a>
+        </div> -->
+        <!-- 🍔 Hamburger Icon -->
+        <div class="hamburger" id="hamburgerBtn">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+
+    <main class="mainBody">
+      <div class="quotes">
+        <p class="quote highlight">Feel Hungry</p>
+        <p class="quote">Find Food Fast</p>
+        <p class="quote">Discover the Best Food & Drinks in Mumbai</p>
+      </div>
+
+      <div class="searchBar">
+        <div class="searchWrapper">
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search..."
+            autocomplete="off"
+          />
+          <div class="suggestions" id="suggestions"></div>
+        </div>
+        <button id="searchBtn">Search</button>
+      </div>
+      <div class="delivery_dining">
+        <div class="twoOption" id="delivery">
+          <img src="./assets/delivery.png" alt="delivery icon" />
+          <p>Delivery</p>
+        </div>
+        <div class="twoOption" id="taste_trip">
+          <img src="./assets/taste_trip.png" alt="dining out icon" />
+          <p>Taste trip</p>
+        </div>
+      </div>
+      <!-- for restaurants -->
+      <section class="taste_trip_filter">
+        <h2 id="filterRestaurants"></h2>
+        <div class="filters"></div>
+      </section>
+
+      <!-- for delivery -->
+      <section class="deliveryFilter">
+        <div class="filters"></div>
+      </section>
+
+      <div class="showFood">
+        <!-- <div class="restaurantsSection"></div> -->
+
+        <!-- <div class="deliverySection"></div> -->
+      </div>
+      <div id="detailPanel" class="detail-panel" style="display: none">
+        <!-- <div class="detail-content">
+        </div> -->
+      </div>
+      <button id="scrollToTopBtn" title="Go to top">↑</button>
+    </main>
+    <footer class="appFooter">
+      <div class="footerContent">
+        <!-- 🍔 Food Delivery Section -->
+        <div class="footerDelivery">
+          <h3>Food Delivery</h3>
+          <p>
+            Explore curated restaurants, mock menus, and dynamic filters—all
+            designed to simulate a real-world delivery experience.
+          </p>
+          <ul>
+            <li>Dynamic restaurant cards</li>
+            <li>Mock ratings & cuisine types</li>
+            <li>Interactive filter UI</li>
+          </ul>
+        </div>
+
+        <!-- 🔗 Navigation Links -->
+        <div class="footerLinks">
+          <a href="#" id="refreshLink">Home</a>
+          <a href="#filterRestaurants" id="restaurantFooterAndMenu"
+            >Restaurants</a
+          >
+          <a href="#filterRestaurants" id="deliveryFooterAndMenu">Delivery</a>
+          <div class="aboutAndContact">About</div>
+        </div>
+
+        <!-- 🧑‍💻 Developer Credit -->
+        <div class="footerCredit">
+          <p>Designed & developed by Ritesh Rana</p>
+          <p>© 2025 Zwigato UI Showcase</p>
+        </div>
+      </div>
+    </footer>
+    <!-- about and Contact popup -->
+    <div class="aboutPopup" id="aboutPopup">
+      <div class="aboutContent" data-aos="fade-down">
+        <h3><i class="fa-solid fa-info-circle"></i> About Zwigato</h3>
+        <p>
+          Zwigato is a frontend project created to simulate a food delivery and
+          table booking website. Data stored using localStorage &
+          sessionStorage. It includes:
+        </p>
+        <ul>
+          <li><i class="fa-solid fa-utensils"></i> Restaurant filtering</li>
+          <li><i class="fa-solid fa-filter"></i> Food filtering</li>
+          <li><i class="fa-solid fa-bowl-food"></i> Food cart</li>
+          <li><i class="fa-solid fa-calendar-check"></i> Table booking</li>
+          <li>
+            <i class="fa-solid fa-clock-rotate-left"></i> Order & booking
+            history
+          </li>
+          <li>
+            <i class="fa-solid fa-user-lock"></i> Firebase login/signup (no
+            backend or database)
+          </li>
+          <li>
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Theme switching
+          </li>
+        </ul>
+        <p>
+          Built by <strong>Ritesh Rana</strong> using HTML, CSS, JS, and
+          Firebase.
+        </p>
+        <p id="contactLinks">
+          Contact:
+          <a href="https://github.com/riteshrana12-dev" target="_blank"
+            >GitHub</a
+          >
+          |
+          <a
+            href="https://www.linkedin.com/in/ritesh-rana-a3190537a/"
+            target="_blank"
+            >LinkedIn</a
+          >
+          |
+          <a href="mailto:kritesh13501@gmail.com">Gmail</a>
+        </p>
+        <button id="closeAbout">Close</button>
+      </div>
+    </div>
     <script type="module">
       import { auth } from "./firebase-init.js";
-      import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+      import {
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-      const form = document.querySelector("#loginForm");
-      const emailInput = document.querySelector('input[name="email"]');
-      const passwordInput = document.querySelector('input[name="password"]');
-      const errorMessageDiv = document.querySelector(".error-message");
+      const loginBtn = document.querySelector(".login");
+      const hamburger = document.querySelector("#hamburgerBtn");
+      const sideMenu = document.querySelector("#sideMenu");
+      const profileName = document.querySelector(".profileSection h3");
+      const logoutLink = document.querySelector('a[href="index.html"]'); // your logout link
 
-      function showError(message) {
-        errorMessageDiv.textContent = message;
-        errorMessageDiv.classList.add("show");
-        errorMessageDiv.style.display = "block";
-      }
+      // ✅ Handle Logout
+      if (logoutLink) {
+        logoutLink.addEventListener("click", async (e) => {
+          e.preventDefault(); // stop normal link behavior
+          try {
+            await signOut(auth);
+            localStorage.removeItem("redirectAfterLogin"); // clear any redirect
+            // ✅ Update UI instantly
+            if (loginBtn) loginBtn.style.display = "block";
+            if (hamburger) hamburger.style.display = "none";
+            if (sideMenu) sideMenu.style.display = "none";
 
-      function clearError() {
-        errorMessageDiv.textContent = "";
-        errorMessageDiv.style.display = "none";
-        errorMessageDiv.classList.remove("show");
-      }
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        clearError(); // clear any previous error
-
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-
-        try {
-          const userCredential = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          const user = userCredential.user;
-
-          window.location.href = "home.html";
-        } catch (error) {
-          if (error.code === "auth/user-not-found") {
-            showError("No account found. Please sign up first.");
-          } else if (error.code === "auth/wrong-password") {
-            showError("Incorrect password. Try again.");
-          } else if (error.code === "auth/invalid-credential") {
-            showError(
-              "Invalid credentials. Please check your email and password."
-            );
-          } else {
-            showError(error.message);
+            // redirect to homepage
+            window.location.href = "index.html";
+          } catch (error) {
+            console.error("Logout failed:", error.message);
+            alert("Something went wrong during logout.");
           }
+        });
+      }
+
+      // ✅ Handle login state changes
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // Hide login button, show hamburger + side menu
+          if (loginBtn) loginBtn.style.display = "none";
+          if (hamburger) hamburger.style.display = "block";
+          if (sideMenu) sideMenu.style.display = "block";
+
+          if (profileName)
+            profileName.textContent = user.displayName || "Zwigato User";
+
+          document.body.style.display = "block";
+        } else {
+          // Show login button, hide menu
+          if (loginBtn) loginBtn.style.display = "block";
+          if (hamburger) hamburger.style.display = "none";
+          if (sideMenu) sideMenu.style.display = "none";
+
+          document.body.style.display = "block";
         }
       });
     </script>
-    <script src=""></script>
+
+    <script src="filterData.js"></script>
+    <script src="restaurantsAndDeliveryDumyData.js"></script>
+    <script type="module" src="app.js"></script>
+
+    <!-- <script type="module" src="auth.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script type="module">
+      document.addEventListener("DOMContentLoaded", () => {
+        AOS.init({
+          duration: 600,
+          offset: 120,
+          once: true,
+        });
+      });
+    </script>
   </body>
 </html>

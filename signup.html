@@ -24,26 +24,23 @@
         </form>
 
         <div class="link">
-          <a href="index.html">Already have an account? Login</a>
+          <a href="login.html">Already have an account? Login</a>
         </div>
       </div>
     </div>
     <script src="toggle.js"></script>
     <script type="module">
       import { auth } from "./firebase-init.js";
-      import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
       import {
         createUserWithEmailAndPassword,
         updateProfile,
       } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-      // DOM selectors
       const form = document.querySelector("#signupForm");
       const nameInput = document.querySelector('input[name="name"]');
       const emailInput = document.querySelector('input[name="email"]');
       const passwordInput = document.querySelector('input[name="password"]');
 
-      // Handle form submission
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -59,17 +56,18 @@
           );
           const user = userCredential.user;
 
-          // Update display name using modular syntax
           await updateProfile(user, { displayName: name });
 
-          console.log("User signed up:", user);
-          // alert("Signup successful!");
-          window.location.href = "home.html";
+          alert("Signup successful!");
 
-          form.reset();
+          // ✅ Check if we had a redirect (from Add to Cart or Book Table)
+          const redirectURL =
+            localStorage.getItem("redirectAfterLogin") || "index.html";
+          localStorage.removeItem("redirectAfterLogin");
+
+          window.location.href = redirectURL;
         } catch (error) {
-          console.error("Signup error:", error.message);
-          // alert(error.message);
+          alert(error.message);
         }
       });
     </script>

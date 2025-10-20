@@ -1,3 +1,9 @@
+import { auth } from "./firebase-init.js";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
 const tasteTrip = document.querySelector("#taste_trip");
 const delivery = document.querySelector("#delivery");
 const deliveryFilter = document.querySelector(".deliveryFilter");
@@ -364,7 +370,8 @@ function showFoodItems(dataArray, type) {
           </div>
           <div class="deliveryDescription">
             <div class="deliveryAllDetail">
-              <p class="name">${item.name}</p>
+              <span class="name">${item.name}</span>
+              <span class="heart-icon" data-id="${item.id}"></span>
             </div>
             <div class="deliveryAllDetail">
               <p class="price">₹${item.price}</p>
@@ -503,13 +510,29 @@ function detailShow(allCards, dataArray, type, menu) {
 
         detailPanel.style.display = "flex";
         const bookTableBtn = document.getElementById("bookTableBtn");
+
         if (bookTableBtn) {
-          bookTableBtn.addEventListener("click", () => {
-            const restaurantName = itemData.rest_name;
-            const url = `book-table.html?restaurant=${encodeURIComponent(
-              restaurantName
-            )}`;
-            window.open(url, "_blank"); // 🔥 opens in a new tab
+          bookTableBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            onAuthStateChanged(auth, (user) => {
+              if (!user) {
+                // ❌ User not logged in → save current page and redirect to login
+                localStorage.setItem(
+                  "redirectAfterLogin",
+                  window.location.href
+                );
+                window.location.href = "login.html";
+                return;
+              }
+
+              // ✅ User is logged in → open booking page
+              const restaurantName = itemData.rest_name;
+              const url = `book-table.html?restaurant=${encodeURIComponent(
+                restaurantName
+              )}`;
+              window.open(url, "_blank");
+            });
           });
         }
 
@@ -782,44 +805,55 @@ function cartFunction() {
       }
     });
 
+    // 🧠 Add-to-Cart Button with Login Check
     newAddCartBtn.addEventListener("click", (e) => {
-      const card = e.target.closest(".deliveryDetail");
-      const cartCount = card.querySelector(".cartCount");
-      const count = parseInt(cartCount.textContent.trim()) || 0;
-
-      if (count > 0) {
-        const foodItem = {
-          id: card.dataset.id,
-          name: card.dataset.name,
-          price: parseFloat(card.dataset.price),
-          image: card.dataset.image,
-          quantity: count,
-          totalPrice: parseFloat(card.dataset.price) * count,
-        };
-
-        let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-        // ✅ Check by ID and name to avoid false matches
-        const existingItem = cart.find(
-          (i) => i.id === foodItem.id && i.name === foodItem.name
-        );
-
-        if (existingItem) {
-          existingItem.quantity += count;
-          existingItem.totalPrice += foodItem.totalPrice;
-        } else {
-          cart.push(foodItem);
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          // ❌ Not logged in — redirect to login
+          localStorage.setItem("redirectAfterLogin", window.location.href);
+          window.location.href = "login.html";
+          return;
         }
 
-        localStorage.setItem("cartItems", JSON.stringify(cart));
-        showToast("Item added to cart!");
+        // ✅ Logged in — continue add to cart logic
+        const card = e.target.closest(".deliveryDetail");
+        const cartCount = card.querySelector(".cartCount");
+        const count = parseInt(cartCount.textContent.trim()) || 0;
 
-        // Reset count
-        card.dataset.count = "0";
-        cartCount.textContent = "0";
-      } else {
-        alert("Please add at least 1 item before adding to cart!");
-      }
+        if (count > 0) {
+          const foodItem = {
+            id: card.dataset.id,
+            name: card.dataset.name,
+            price: parseFloat(card.dataset.price),
+            image: card.dataset.image,
+            quantity: count,
+            totalPrice: parseFloat(card.dataset.price) * count,
+          };
+
+          let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+          // ✅ Check by ID and name to avoid duplicates
+          const existingItem = cart.find(
+            (i) => i.id === foodItem.id && i.name === foodItem.name
+          );
+
+          if (existingItem) {
+            existingItem.quantity += count;
+            existingItem.totalPrice += foodItem.totalPrice;
+          } else {
+            cart.push(foodItem);
+          }
+
+          localStorage.setItem("cartItems", JSON.stringify(cart));
+          showToast("Item added to cart!");
+
+          // Reset count
+          card.dataset.count = "0";
+          cartCount.textContent = "0";
+        } else {
+          alert("Please add at least 1 item before adding to cart!");
+        }
+      });
     });
   });
 }
@@ -891,5 +925,20 @@ document.addEventListener("DOMContentLoaded", () => {
 document.querySelectorAll("img").forEach((img) => {
   img.addEventListener("load", () => {
     img.classList.add("loaded");
+  });
+});
+
+// Event listener of contact and pop up
+document.addEventListener("DOMContentLoaded", () => {
+  const aboutBtn = document.querySelector(".aboutAndContact");
+  const aboutPopup = document.getElementById("aboutPopup");
+  const closeAbout = document.getElementById("closeAbout");
+
+  aboutBtn.addEventListener("click", () => {
+    aboutPopup.style.display = "flex";
+  });
+
+  closeAbout.addEventListener("click", () => {
+    aboutPopup.style.display = "none";
   });
 });
