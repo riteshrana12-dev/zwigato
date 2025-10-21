@@ -631,7 +631,7 @@ function showsearch(searchData, dataArray, type) {
   searchBar.style.display = "flex";
 
   let currentQuery = "";
-  let press;
+  let divQuery;
   function updateSuggestions(query) {
     console.log(query);
     console.log(searchData);
@@ -657,6 +657,7 @@ function showsearch(searchData, dataArray, type) {
       div.classList.add("suggestion-item");
       suggestionsBox.appendChild(div);
       div.addEventListener("click", (e) => {
+        console.log(e);
         divQuery = e.target.textContent.toLowerCase().trim();
         filterFunctionForSearch(dataArray, divQuery, type);
       });
