@@ -319,77 +319,91 @@ function showFoodItems(dataArray, type) {
       let html = "";
 
       if (type === "restaurant") {
+        const favs = JSON.parse(localStorage.getItem("favourites")) || {};
+        const isFav = favs[item.id];
+
         html = `
-        <div class="restaurantsDetail" data-aos="fade-up"  data-index="${index}">
-        
-          <div class="restaurantsImg">
-            <img src="assets/${item.image}.jpg" alt="${
+    <div class="restaurantsDetail" data-aos="fade-up" data-index="${index}" data-id="${
+          item.id
+        }">
+      <div class="restaurantsImg">
+        <img src="assets/${item.image}.jpg" alt="${
           item.rest_name
         }" loading="lazy"/>
-          </div>
-          <div class="restaurantsDescription">
-            <div class="restaurantsAllDetail">
-              <p class="name">${item.rest_name}</p>
-              <p class="ratings">${(Math.random() * 2 + 3).toFixed(1)}
-                <span class="star-icon">★</span>
-              </p>
-            </div>
-            <div class="restaurantsAllDetail">
-              <p class="food_type" data-food='${JSON.stringify(
-                item.food_type
-              )}'>${item.food_type.slice(0, 2).join(" , ")}${
+      </div>
+      <div class="restaurantsDescription">
+        <div class="restaurantsAllDetail">
+          <p class="name">${item.rest_name}</p>
+          <p class="ratings">${(Math.random() * 2 + 3).toFixed(1)}
+            <span class="star-icon">★</span>
+          </p>
+          <span class="heart-icon ${
+            isFav ? "active" : ""
+          }" favourites-index="${index}"></span>
+        </div>
+        <div class="restaurantsAllDetail">
+          <p class="food_type" data-food='${JSON.stringify(item.food_type)}'>
+            ${item.food_type.slice(0, 2).join(" , ")}${
           item.food_type.length > 2 ? "..." : ""
-        }</p>
-              <p class="two_price">price-of-two: ${item.price_for_two}</p>
-            </div>
-            <div class="restaurantsAllDetail">
-              <p class="location">${item.location}</p>
-            </div>
-            <div class="restaurantsAllDetail">
-              <p class="time">Time: ${item.restaurant_open_time}-${
+        }
+          </p>
+          <p class="two_price">price-of-two: ₹${item.price_for_two}</p>
+        </div>
+        <div class="restaurantsAllDetail">
+          <p class="location">${item.location}</p>
+        </div>
+        <div class="restaurantsAllDetail">
+          <p class="time">Time: ${item.restaurant_open_time}-${
           item.restaurant_close_time
         }</p>
-              <p class="distance">${item.distance_from_customer_house}</p>
-            </div>
-          </div>
-        </div>`;
+          <p class="distance">${item.distance_from_customer_house}</p>
+        </div>
+      </div>
+    </div>`;
         restaurantsSection.innerHTML += html;
       }
 
       if (type === "delivery") {
+        const favs = JSON.parse(localStorage.getItem("favourites")) || {};
+        const isFav = favs[item.id];
+
         html = `
-        <div class="deliveryDetail" data-aos="fade-up" data-index="${index}"
-        data-id="${item.id}" 
-       data-name="${item.name}" 
-       data-price="${item.price}" 
-       data-image="assets/${item.image}.png">
+  <div class="deliveryDetail" data-aos="fade-up" data-index="${index}"
+       data-name="${item.name}"
+       data-price="${item.price}"
+       data-image="assets/${item.image}.png"
+       data-prep="${item.prep_time}"
+       data-rating="${item.rating}">
+       
+    <div class="deliveryImg">
+      <img src="assets/${item.image}.png" alt="${item.name}" loading="lazy"/>
+    </div>
 
+    <div class="deliveryDescription">
+      <div class="deliveryAllDetail">
+        <span class="name">${item.name}</span>
+        <span class="heart-icon ${
+          isFav ? "active" : ""
+        }" favourites-index="${index}"></span>
+      </div>
 
-          <div class="deliveryImg">
-            <img src="assets/${item.image}.png" alt="${item.name}" loading="lazy"/>
-          </div>
-          <div class="deliveryDescription">
-            <div class="deliveryAllDetail">
-              <span class="name">${item.name}</span>
-              <span class="heart-icon" data-id="${item.id}"></span>
-            </div>
-            <div class="deliveryAllDetail">
-              <p class="price">₹${item.price}</p>
-              <p class="ratings">★ ${item.rating}</p>
-            </div>
-            <div class="deliveryAllDetail">
-              <p class="time">⏱️ ${item.prep_time} min</p>
-            </div>
-             <div class="cartControls">
+      <div class="deliveryAllDetail">
+        <p class="price">₹${item.price}</p>
+        <p class="ratings">★ ${item.rating}</p>
+      </div>
+
+      <div class="deliveryAllDetail">
+        <p class="time">⏱️ ${item.prep_time} min</p>
+      </div>
+
+      <div class="cartControls">
         <button class="minusBtn">–</button>
         <span class="cartCount">0</span>
         <button class="plusBtn">+</button>
         <button class="addCartBtn">Add to Cart</button>
       </div>
-
-
-          </div>
-        </div>`;
+    </div>
+  </div>`;
         deliverySection.innerHTML += html;
       }
 
@@ -429,10 +443,11 @@ scrollBtn.addEventListener("click", () => {
 
 function allCardsRestaurantAndDelivery(dataArray, type) {
   const allCards = document.querySelectorAll(
-    ".restaurantsDetail, .deliveryDetail"
+    type === "delivery" ? ".deliveryDetail" : ".restaurantsDetail"
   );
 
   detailShow(allCards, dataArray, type, menuImages);
+  // favouritescards(allCards, dataArray, type);
 }
 const detailPanel = document.getElementById("detailPanel");
 function detailShow(allCards, dataArray, type, menu) {
@@ -617,6 +632,72 @@ function detailShow(allCards, dataArray, type, menu) {
   }
 }
 
+// function favouritescards(allCards, dataArray, type) {
+//   const favs = JSON.parse(localStorage.getItem("favourites")) || {};
+
+//   allCards.forEach((card, index) => {
+//     const heartIcon = card.querySelector(".heart-icon");
+//     const itemIndex = card.getAttribute("data-index");
+
+//     if (!heartIcon || itemIndex === null) return;
+
+//     // Initial state
+//     if (favs[itemIndex]) {
+//       heartIcon.classList.add("active");
+//     }
+
+//     heartIcon.addEventListener("click", () => {
+//       const isFav = favs[itemIndex];
+
+//       if (isFav) {
+//         delete favs[itemIndex];
+//         heartIcon.classList.remove("active");
+//         localStorage.setItem("favourites", JSON.stringify(favs));
+//         showToast("Removed from favorites");
+
+//         if (window.location.pathname.includes("favourites.html")) {
+//           card.classList.add("fade-out");
+//           setTimeout(() => card.remove(), 300);
+//           renderFavourites?.();
+//         }
+//       } else {
+//         const itemData = dataArray[index];
+
+//         const favItem =
+//           type === "delivery"
+//             ? {
+//                 id: itemIndex,
+//                 title: itemData.name,
+//                 img: `assets/${itemData.image}.png`,
+//                 price: itemData.price,
+//                 prepTime: itemData.prep_time,
+//                 rating: itemData.rating,
+//                 type: "delivery",
+//               }
+//             : {
+//                 id: itemIndex,
+//                 title: itemData.rest_name,
+//                 img: `assets/${itemData.image}.jpg`,
+//                 price: itemData.price_for_two,
+//                 location: itemData.location,
+//                 foodTypes: itemData.food_type,
+//                 open: itemData.restaurant_open_time,
+//                 close: itemData.restaurant_close_time,
+//                 rating: (Math.random() * 2 + 3).toFixed(1),
+//                 type: "restaurant",
+//               };
+
+//         favs[itemIndex] = favItem;
+//         heartIcon.classList.add("active");
+//         localStorage.setItem("favourites", JSON.stringify(favs));
+
+//         const name = favItem.title;
+//         const label = favItem.type === "delivery" ? "food item" : "restaurant";
+//         showToast(`Added "${name}" to your ${label} favorites`);
+//       }
+//     });
+//   });
+// }
 // search bar functionality
 
 const suggestionsBox = document.querySelector("#suggestions");

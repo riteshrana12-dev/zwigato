@@ -1,0 +1,261 @@
+:root {
+  --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.88);
+  --primary-hover: #ff4d4d;
+  --heart-outline: url("./assets/heart-outline.svg");
+  --heart-filled: url("./assets/heart-filled.svg");
+  --heart-size: 24px;
+  --blur: blur(12px);
+  --shadow-large: 0 6px 38px rgba(31, 38, 135, 0.09);
+}
+
+body.dark-mode {
+  --surface: #1e1e1e;
+  --surface-glass: rgba(40, 40, 40, 0.88);
+  --primary-hover: #ff9999;
+  --shadow-large: 0 6px 38px rgba(0, 0, 0, 0.3);
+  --heart-outline: url("./assets/heart-outline-dark.svg");
+  --heart-filled: url("./assets/heart-filled-dark.svg");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: var(--surface);
+  color: #333;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.page-title {
+  text-align: center;
+  margin: 2rem 0 1rem;
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+  color: var(--primary-hover);
+}
+
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.toggle-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #eee;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toggle-btn.active {
+  background-color: var(--primary-hover);
+  color: #fff;
+}
+
+.favourites-section {
+  padding: 2rem 1rem;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: var(--shadow-large);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
+  animation: fadeSlideIn 0.6s ease both;
+}
+
+.deliveryDetail,
+.restaurantsDetail {
+  background: var(--surface-glass);
+  backdrop-filter: var(--blur);
+  border-radius: 20px;
+  box-shadow: var(--shadow-large);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeSlideIn 0.7s ease both;
+  display: flex;
+  flex-direction: column;
+}
+
+.deliveryDetail:hover,
+.restaurantsDetail:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(31, 38, 135, 0.16);
+}
+
+.deliveryImg,
+.restaurantsImg {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.deliveryImg img,
+.restaurantsImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.28s ease, filter 0.18s ease;
+  filter: brightness(0.97) saturate(1.07);
+}
+
+.deliveryDetail:hover img,
+.restaurantsDetail:hover img {
+  transform: scale(1.08) rotate(-1deg);
+  filter: brightness(1.11) saturate(1.13);
+}
+
+.deliveryDescription,
+.restaurantsDescription {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-glass);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  transition: background-color 0.4s ease;
+  gap: 0.6rem;
+}
+
+.deliveryAllDetail,
+.restaurantsAllDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.name {
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 700;
+  color: var(--primary-hover);
+  letter-spacing: 1px;
+  font-family: scaryring, sans-serif;
+}
+
+.heart-icon {
+  width: var(--heart-size);
+  height: var(--heart-size);
+  background-image: var(--heart-outline);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-image 0.3s ease;
+}
+
+.heart-icon:hover {
+  transform: scale(1.1);
+}
+
+.heart-icon.active {
+  background-image: var(--heart-filled);
+  transform: scale(1.3);
+}
+
+.ratings {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star-icon {
+  padding-bottom: 6px;
+  color: #fdd835;
+  font-size: 1rem;
+}
+
+.food_type,
+.two_price,
+.location,
+.time,
+.distance {
+  font-size: 0.85rem;
+  color: #565665;
+  opacity: 0.82;
+}
+
+.empty-msg {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #777;
+  margin-top: 2rem;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  .name {
+    font-size: 1.5rem;
+  }
+
+  .ratings,
+  .food_type,
+  .two_price,
+  .location,
+  .time {
+    font-size: 0.8rem;
+  }
+
+  .heart-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .name {
+    font-size: 1.3rem;
+  }
+
+  .ratings,
+  .food_type,
+  .two_price,
+  .location,
+  .time {
+    font-size: 0.75rem;
+  }
+
+  .favourites-section {
+    padding: 1rem;
+    gap: 1.2rem;
+  }
+
+  .deliveryDescription,
+  .restaurantsDescription {
+    padding: 0.8rem;
+  }
+}
